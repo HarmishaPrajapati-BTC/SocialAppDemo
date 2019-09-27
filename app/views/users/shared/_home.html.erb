@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <body class="nav-md">
+    <div class="container body">
+      <div class="main_container">
+        <div class="col-md-3 left_col">
+          <div class="left_col scroll-view">
+            <div class="navbar nav_title" style="border: 0;">
+              <a class="site_title"><i class="fa fa-instagram"></i> <span>Social Media</span></a>
+            </div>
+            <br>
+            <div class="clearfix"></div>
+            <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+              <div class="menu_section">
+                <ul class="nav side-menu">
+                  <li>
+                    <a href="<%= new_post_path %>">
+                      <i class="fa fa-newspaper-o">
+                      </i> Posts
+                    </a>
+                  </li>
+                  <li>
+                    <a href="<%= new_group_path %>">
+                    <i class="fa fa-users">
+                    </i>Groups</a>
+                  </li>
+                  <li>
+                    <a href="<%=new_post_path%>">
+                      <i class="fa fa-search">
+                      </i>Find Friends</a>
+                  </li>
+                  <li>
+                    <a href="<%=new_post_path%>">
+                      <i class="fa fa-bookmark">
+                      </i>Account</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+       <div class="nav navbar-nav navbar-right">
+        <%= link_to "Logout", destroy_user_session_path %>
+      </div>
+    </div>
+</body>
+</html>
