@@ -1,9 +1,13 @@
-<p id="notice"><%= notice %></p>
+<%= render 'users/shared/home'%>
+<div class="right_col" role="main" style="min-height: 600px;">
 
-<p>
-  <strong>Name:</strong>
-  <%= @group.name %>
-</p>
+  <p id="notice"><%= notice %></p>
 
-<%= link_to 'Edit', edit_group_path(@group) %> |
-<%= link_to 'Back', groups_path %>
+  <p>
+    <strong>Name:</strong>
+    <%= @group.name %>
+  </p>
+
+  <%= link_to 'Edit', edit_group_path(@group) %> |
+  <%= link_to 'Back', groups_path %>
+</div>

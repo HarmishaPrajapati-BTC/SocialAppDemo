@@ -1,7 +1,7 @@
 <div data-controller='customers'>
   <div class="right_col" role="main" style="min-height: 600px;">
     <%= form_with(model: @post, local: true, class: 'form-horizontal form-label-left') do |f| %>
-        <div class="x_panel" style="min-height: 600px;"><h1><b>Create New Post</b>
+        <div class="x_panel" style="min-height: 600px;"><h1 style="text-align: center;"><b>Create New Post</b>
         <div class="nav navbar-right panel_toolbox">
         </div></h1><br>
           <div class="form-group">
@@ -33,7 +33,9 @@
           </div>
             <div class="form-group">
               <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                <button class="btn btn-primary" type="reset">Reset</button>
+                <%= link_to posts_path, class: 'btn btn-primary' do %>
+                  <i class="fa fa-arrow-left" aria-hidden="true"></i> <%= t('back') %>
+                <% end %>
                 <button type="submit" class="btn btn-success">Submit</button>
               </div>
            </div>

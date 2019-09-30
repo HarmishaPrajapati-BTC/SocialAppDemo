@@ -1,11 +1,14 @@
 Rails.application.routes.draw do
-  devise_for :users
+  devise_for :users, controllers: {
+                   sessions: 'users/sessions',
+                   registrations: 'users/registrations',
+                 omniauth_callbacks: "users/omniauth_callbacks"}
   resources :posts
   resources :groups
 
   devise_scope :user do
     authenticated  do
-      root to: 'users#dashboard_view'
+      root to: 'posts#index'
       get '/users/sign_out' => 'devise/sessions#destroy'
     end
 
@@ -13,5 +16,8 @@ Rails.application.routes.draw do
       root to: 'devise/sessions#new', as: 'unauthenticated_root'
     end
   end
+
+  get 'auth/:provider/callback', to: 'sessions#googleAuth'
+  get 'auth/failure', to: redirect('/')
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
