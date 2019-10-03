@@ -1,16 +1,17 @@
 <div data-controller='customers'>
   <div class="right_col" role="main" style="min-height: 600px;">
     <%= form_with(model: @post, local: true, class: 'form-horizontal form-label-left') do |f| %>
-        <div class="x_panel" style="min-height: 600px;"><h1 style="text-align: center;"><b>Create New Post</b>
+    <%= f.hidden_field :user_id, value: current_user.id %>
+        <div class="x_panel" style="min-height: 600px;">
         <div class="nav navbar-right panel_toolbox">
-        </div></h1><br>
+        </div>
           <div class="form-group">
             <label class="control-label col-md-3 col-sm-3 col-xs-12">
               <%= t('post.name') %>
               <span class="text-danger">*</span>
             </label>
             <div class="col-md-6 col-sm-6 col-xs-12">
-              <%= f.text_field :name, class: 'form-control', required: true %>
+              <%= f.text_field :name, class: 'form-control' %>
             </div>
           </div>
           <div class="form-group">
@@ -19,7 +20,7 @@
               <span class="text-danger">*</span>
             </label>
             <div class="col-md-6 col-sm-6 col-xs-12">
-              <%= f.text_field :post_type, class: 'form-control', required: true %>
+              <%= f.text_field :post_type, class: 'form-control' %>
             </div>
           </div>
           <div class="form-group">
@@ -28,17 +29,36 @@
               <span class="text-danger">*</span>
             </label>
             <div class="col-md-6 col-sm-6 col-xs-12">
-              <%= f.text_area :content, class: 'form-control', required: true %>
+              <%= f.text_area :content, class: 'form-control' %>
             </div>
           </div>
-            <div class="form-group">
-              <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                <%= link_to posts_path, class: 'btn btn-primary' do %>
-                  <i class="fa fa-arrow-left" aria-hidden="true"></i> <%= t('back') %>
+          <div class="form-group">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12">
+              <%= t('post.image') %>
+              <span class="text-danger">*</span>
+            </label>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+              <%= f.file_field :image, class: 'form-control' %>
+            </div>
+            <div class="control-label col-md-6 col-sm-6 col-xs-12">
+              <% if @post.try(:image).attached? %>
+                <%= image_tag @post.image, size: "120x100", class: "image" %>
+                <%= link_to delete_image_attachment_post_path(image_id: @post.image.id),
+                      method: :delete,
+                      data: { confirm: 'Are you sure?' }, class: 'btn-close' do %>
+                      <i class="fa fa-times-circle" aria-hidden="true"></i>
                 <% end %>
-                <button type="submit" class="btn btn-success">Submit</button>
-              </div>
-           </div>
+              <% end %>
+            </div><br>
+          </div>
+          <div class="form-group">
+            <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+              <%= link_to posts_path, class: 'btn btn-primary' do %>
+                <i class="fa fa-arrow-left" aria-hidden="true"></i> <%= t('back') %>
+              <% end %>
+              <button type="submit" class="btn btn-success">Submit</button>
+            </div>
+         </div>
       </div>
     <% end %>
   </div>

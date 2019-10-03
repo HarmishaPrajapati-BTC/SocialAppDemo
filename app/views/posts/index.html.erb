@@ -1,40 +1,54 @@
 <%= render 'users/shared/home'%>
 <div class="right_col" role="main" style="min-height: 600px;">
-  <p id="notice"><%= notice %></p>
-
-  <h1>Posts</h1>
-
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Post type</th>
-        <th>Content</th>
-        <th colspan="3"></th>
-      </tr>
-    </thead>
-
-    <tbody>
-      <% @posts.each do |post| %>
-        <tr>
-          <td><%= post.name %></td>
-          <td><%= post.post_type %></td>
-          <td><%= post.content %></td>
-          <td><%= link_to post_path(post) do %>
-            <i class="fa fa-eye" data-placement="bottom" title='Show'></td>
+  <div class="clearfix">
+    <div class="x_content">
+      <div class="nav navbar-right panel_toolbox">
+        <%= link_to new_post_path, class: "btn btn-dark btn-sm", style: "align: right;" do %>
+          <i class="fa fa-arrow-right pd-6" data-placement="bottom" title='create'></i> Create New Post
+        <% end %>
+      </div>
+      <div class="title_left">
+        <h3>Posts</h3>
+      </div>
+      <div class="x_panel">
+        <div class="x_content">
+          <% @posts.each do |post| %>
+            <b><%= post.name %></b><br>
+            Post type - <%= post.post_type %><br>
+            <blockquote>
+              <%= post.content %>
+              <footer>
+                <cite><b><%= post.try(:user).try(:first_name) %></b></cite>
+              </footer>
+              <% if post.image.attached? %>
+                <%= image_tag post.image, size: "120x100" %>
+              <% end %>
+            </blockquote>
+            <% if current_user != post.user %>
+              <%= link_to post_path(post) do %>
+                <i class="fa fa-thumbs-up pd-6" data-placement="bottom" title='Like'></i>
+              <% end %>
+              <%= link_to post_path(post) do %>
+                <i class="fa fa-comment pd-6" data-placement="bottom" title='Comment'></i>
+              <% end %>
+              <%= link_to post_path(post) do %>
+                <i class="fa fa-share pd-6" data-placement="bottom" title='Share'></i>
+              <% end %><br>
+            <% else %>
+              <%= link_to post_path(post) do %>
+                <i class="fa fa-eye pd-6" data-placement="bottom" title='Show'></i>
+              <% end %>
+              <%= link_to edit_post_path(post) do %>
+                <i class="fa fa-edit pd-6" data-placement="bottom" title='Edit'></i>
+              <% end %>
+              <%= link_to post_path(post), method: :delete, data: { confirm: 'Are you sure?' } do %>
+                <i class="fa fa-trash pd-6" data-placement="bottom" title='Delete'></i><br><br>
+              <% end %>
+            <% end %>
+            <%= paginate @posts %>
           <% end %>
-          <td><%= link_to edit_post_path(post) do %>
-            <i class="fa fa-edit" data-placement="bottom" title='Edit'></td>
-          <% end %>
-          <td><%= link_to post_path(post), method: :delete, data: { confirm: 'Are you sure?' } do %>
-            <i class="fa fa-trash" data-placement="bottom" title='Delete'></td>
-          <% end %>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-
-  <br>
-
-  <%= link_to 'New Post', new_post_path %>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

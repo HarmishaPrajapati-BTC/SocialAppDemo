@@ -1,35 +1,40 @@
 <%= render 'users/shared/home'%>
 <div class="right_col" role="main" style="min-height: 600px;">
+  <div class="x_panel">
+    <div class="x_content">
+      <div class="nav navbar-right panel_toolbox">
+        <%= link_to new_group_path, class: "btn btn-dark btn-sm", style: "align: right;" do %>
+          <i class="fa fa-arrow-right pd-6" data-placement="bottom" title='create'></i> Create New Group
+        <% end %>
+      </div>
+      <h1>Groups</h1>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>No. of Peoples</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
 
-  <p id="notice"><%= notice %></p>
-
-  <h1>Groups</h1>
-
-  <table class="table" >
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-
-    <tbody>
-      <% @groups.each do |group| %>
-        <tr>
-          <td><%= group.name %></td>
-          <td><%= link_to group_path(group) do %>
-            <i class="fa fa-eye" data-placement="bottom" title='Show'></td>
+        <tbody>
+          <% @groups.each_with_index do |group, index| %>
+            <tr>
+              <td><%= index + 1 %></td>
+              <td><%= group.name %></td>
+              <td><%= group.users.count %></td>
+              <td>
+              <%= link_to group_path(group), class: 'btn btn-primary btn-xs' do %> Show <% end %>
+              <%= link_to edit_group_path(group), class: 'btn btn-success btn-xs' do %> Edit <% end %>
+              <%= link_to group_path(group), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-xs' do %> Delete <% end %>
+              </td>
+            </tr>
           <% end %>
-          <td><%= link_to edit_group_path(group) do %>
-            <i class="fa fa-edit" data-placement="bottom" title='Edit'></td>
-          <% end %>
-          <td><%= link_to group_path(group), method: :delete, data: { confirm: 'Are you sure?' } do %>
-            <i class="fa fa-trash" data-placement="bottom" title='Delete'></td>
-          <% end %>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-
+        </tbody>
+      </table>
+      <%= paginate @groups %>
+    </div>
+  </div>
   <br>
 </div>

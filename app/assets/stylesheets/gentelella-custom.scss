@@ -144,7 +144,7 @@ html , body{
     padding: 0 0 4px 0
 }
 .left_col {
-    background: #2A3F54
+    background: black
 }
 .nav-sm .container.body .col-md-3.left_col {
     min-height: 100%;
@@ -265,6 +265,9 @@ html , body{
     margin-top: 20px;
     border: 1px solid rgba(52, 73, 94, 0.44);
     padding: 4px
+}
+.pd-6{
+  padding: 6px !important;
 }
 .profile_info {
     padding: 25px 10px 10px;
@@ -492,8 +495,6 @@ body .container.body .right_col {
     background: #D9DEE4
 }
 body {
-    color: #73879C;
-    background: #2A3F54;
     font-family: "Helvetica Neue", Roboto, Arial, "Droid Sans", sans-serif;
     font-size: 13px;
     font-weight: 400;
@@ -641,6 +642,11 @@ table.no-margin .progress {
 }
 .grid_slider .col-md-6 {
     padding: 0 40px
+}
+.h1_style {
+  text-align: center;
+  color: white;
+  background: black
 }
 h1,
 .h1,
@@ -822,7 +828,8 @@ a:focus {
     display: block;
     height: 55px;
     margin: 0;
-    padding-left: 10px
+    padding-left: 10px;
+    background: black
 }
 .site_title:hover,
 .site_title:focus {
@@ -1016,6 +1023,9 @@ h2 {
     display: table-cell;
     vertical-align: middle;
     width: 80%
+}
+.image {
+  vertical-align: text-top;
 }
 .detail a {
     text-decoration: none;

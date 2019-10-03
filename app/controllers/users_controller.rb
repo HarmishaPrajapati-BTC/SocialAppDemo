@@ -1,13 +1,5 @@
 class UsersController < ApplicationController
-  before_action :add_role_to_user
-  before_action :set_post, only: [:show, :edit, :update, :destroy]
-
-  def add_role_to_user
-    user = current_user
-    if user != 'admin' && user != 'group_admin'
-      user.add_role :member
-    end
-  end
+  before_action :set_user, only: [:show, :edit, :update, :destroy]
 
   def index
     @users = User.all
@@ -57,8 +49,12 @@ class UsersController < ApplicationController
     end
   end
 
+ def find_friends
+   @users = User.all
+ end
+
   private
-    def set_post
+    def set_user
       @user = User.find(params[:id])
     end
 

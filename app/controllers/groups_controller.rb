@@ -2,7 +2,7 @@ class GroupsController < ApplicationController
   before_action :set_group, only: [:show, :edit, :update, :destroy]
 
   def index
-    @groups = Group.all
+    @groups = Group.page(params[:page]).per(5)
   end
 
   def show
@@ -17,6 +17,7 @@ class GroupsController < ApplicationController
 
   def create
     @group = Group.new(group_params)
+    @group.users = User.where(id: params[:group][:user_ids])
     if @group.new_record?
       if current_user != 'admin'
         current_user.add_role :group_admin
@@ -24,6 +25,7 @@ class GroupsController < ApplicationController
     end
     respond_to do |format|
       if @group.save
+        # User.invite!(email: "yuyuuhjm@gmail.com")
         format.html { redirect_to @group, notice: 'Group was successfully created.' }
         format.json { render :show, status: :created, location: @group }
       else
@@ -59,6 +61,6 @@ class GroupsController < ApplicationController
     end
 
     def group_params
-      params.require(:group).permit(:name)
+      params.require(:group).permit(:name, user_ids: [])
     end
 end

@@ -2,11 +2,11 @@ class User < ApplicationRecord
   rolify
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  devise :database_authenticatable, :registerable,
+  devise :invitable, :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :omniauthable, omniauth_providers: [:google_oauth2]
 
   has_many :posts
-  belongs_to :group, optional: true
+  has_and_belongs_to_many :groups
   belongs_to :role, optional: true
 
   def self.from_omniauth(auth)

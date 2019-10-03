@@ -2,7 +2,7 @@ class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update, :destroy]
 
   def index
-    @posts = Post.all
+    @posts = policy_scope(Post).page(params[:page]).per(5)
   end
 
   def show
@@ -49,12 +49,19 @@ class PostsController < ApplicationController
     end
   end
 
+  def delete_image_attachment
+    @image = ActiveStorage::Attachment.find_by(id: params[:image_id])
+    @image.purge
+    flash[:notice] = t('flash_notice.destroy.success', resource: 'Image')
+    redirect_to edit_post_path(id: params[:id])
+  end
+
   private
     def set_post
       @post = Post.find(params[:id])
     end
 
     def post_params
-      params.require(:post).permit(:name, :post_type, :content)
+      params.require(:post).permit(:name, :post_type, :content, :user_id, :image)
     end
 end

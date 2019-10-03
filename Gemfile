@@ -27,10 +27,14 @@ gem 'jbuilder', '~> 2.5'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 gem 'devise'
+gem 'devise_invitable', '~> 2.0.0'
 gem 'gentelella-rails'
 gem 'rolify'
 gem 'pry'
 gem 'omniauth-google-oauth2'
+gem "select2-rails"
+gem 'kaminari'
+gem 'pundit'
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
 

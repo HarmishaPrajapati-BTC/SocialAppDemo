@@ -2,14 +2,21 @@ Rails.application.routes.draw do
   devise_for :users, controllers: {
                    sessions: 'users/sessions',
                    registrations: 'users/registrations',
-                 omniauth_callbacks: "users/omniauth_callbacks"}
-  resources :posts
+                   omniauth_callbacks: "users/omniauth_callbacks"}
+  resources :posts do
+    member do
+      delete :delete_image_attachment
+    end
+  end
   resources :groups
+  resources :users
 
   devise_scope :user do
     authenticated  do
       root to: 'posts#index'
       get '/users/sign_out' => 'devise/sessions#destroy'
+      get 'auth/:provider/callback', to: 'sessions#googleAuth'
+      get 'auth/failure', to: redirect('/')
     end
 
     unauthenticated do
@@ -17,7 +24,8 @@ Rails.application.routes.draw do
     end
   end
 
-  get 'auth/:provider/callback', to: 'sessions#googleAuth'
-  get 'auth/failure', to: redirect('/')
+  get 'groups_of_users', to: 'users#groups_of_users'
+  get 'find_friends', to: 'users#find_friends'
+
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
