@@ -1,0 +1,42 @@
+<%= render 'users/shared/home'%>
+<div class="right_col" role="main" style="min-height: 600px;">
+  <div class="x_panel">
+    <div class="x_content">
+    <h1>Users</h1>
+      <table class="table" >
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Contact</th>
+            <th>Address</th>
+
+            <th>Actions</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% @users.each_with_index do |user, index| %>
+            <tr>
+              <td><%= index + 1 %>
+              <td><%= display_dash_in_blank(user.first_name) %></td>
+              <td><%= display_dash_in_blank(user.last_name) %></td>
+              <td><%= display_dash_in_blank(user.email) %></td>
+              <td><%= display_dash_in_blank(user.contact_number) %></td>
+              <td><%= display_dash_in_blank(user.address) %></td>
+
+              <td>
+              <%= link_to user_path(user), class: 'btn btn-primary btn-xs' do %> Show <% end %>
+              <%= link_to edit_user_path(user), class: 'btn btn-success btn-xs' do %> Edit <% end %>
+              <%= link_to user_path(user), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-xs'  do %> Delete <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <br>
+</div>

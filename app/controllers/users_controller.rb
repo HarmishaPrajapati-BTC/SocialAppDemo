@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
   def index
-    @users = User.all
+    @users = policy_scope(User).all
   end
 
   def show
@@ -53,9 +53,14 @@ class UsersController < ApplicationController
    @users = User.all
  end
 
+ def account
+   @user = current_user
+ end
+
   private
     def set_user
-      @user = User.find(params[:id])
+      @user = policy_scope(User).find(params[:id])
+      authorize @user
     end
 
     def user_params

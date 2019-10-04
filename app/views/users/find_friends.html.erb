@@ -1,0 +1,27 @@
+<%= render 'users/shared/home'%>
+<div class="right_col" role="main" style="min-height: 600px;">
+  <div class="x_panel">
+    <div class="x_content">
+      <h1>Peoples</h1>
+      <table class="table" >
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Make Friends</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% @users.each do |user| %>
+            <tr>
+              <td><%= link_to user.first_name, user_path(user), class: 'btn btn-link', style: 'color: blue;' %></td>
+              <td><%= user.email %>
+              <td><%= link_to user_path(user), class: 'btn btn-primary btn-xs' do %> Send Friend Request <% end %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

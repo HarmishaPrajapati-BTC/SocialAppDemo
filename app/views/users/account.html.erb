@@ -1,0 +1,59 @@
+<%= render 'users/shared/home'%>
+<div class="right_col" role="main" style="min-height: 600px;">
+  <div class="clearfix">
+    <div class="x_panel">
+      <div class="x_content">
+        <p>
+          <strong>First Name:</strong>
+          <%= @user.first_name %>
+        </p>
+
+        <p>
+          <strong>Last Name:</strong>
+          <%= @user.last_name %>
+        </p>
+
+        <p>
+          <strong>Contact Number:</strong>
+          <%= @user.contact_number %>
+        </p>
+
+        <p>
+          <strong>Address:</strong>
+          <%= @user.address %>
+        </p>
+
+        <p>
+          <strong>Groups:</strong>
+          <table class="table" >
+            <thead>
+              <tr>
+                <th>Group Name</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @user.groups.each do |group| %>
+              <tr>
+                <td><%= group.try(:name) %></td>
+                <td>
+                  <%= link_to group_path(group), class: 'btn btn-dark btn-xs' do %>
+                    Show Group
+                  <% end %>
+                </td>
+              </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </p>
+
+        <%= link_to users_path, class: 'btn btn-primary btn-sm' do %>
+          <i class="fa fa-arrow-left" aria-hidden="true"></i> Back
+        <% end %>
+        <%= link_to edit_user_path(@user), class: 'btn btn-success btn-sm' do %>
+          <i class="fa fa-edit" aria-hidden="true"></i> Edit
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

@@ -25,20 +25,28 @@
                     </i>Groups</a>
                   </li>
                   <li>
-                    <a href="<%= users_path %>">
-                    <i class="fa fa-user">
-                    </i>Users</a>
-                  </li>
-                  <li>
                     <a href="<%=find_friends_path%>">
                       <i class="fa fa-search">
                       </i>Find Friends</a>
                   </li>
-                  <li>
-                    <a href="<%=user_path(current_user)%>">
-                      <i class="fa fa-bookmark">
-                      </i>Account</a>
-                  </li>
+                  <% if current_user.has_role? :admin %>
+                    <li>
+                      <a href="<%= users_path %>">
+                      <i class="fa fa-user">
+                      </i>Users</a>
+                    </li>
+                    <li>
+                      <a href="<%=account_path%>">
+                        <i class="fa fa-bookmark">
+                        </i>Account</a>
+                    </li>
+                  <% else %>
+                    <li>
+                      <a href="<%=account_path%>">
+                        <i class="fa fa-bookmark">
+                        </i>Account</a>
+                    </li>
+                  <% end %>
                   <li>
                     <a href="<%=destroy_user_session_path%>">
                       <i class="fa fa-power-off">

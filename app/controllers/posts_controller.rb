@@ -3,6 +3,7 @@ class PostsController < ApplicationController
 
   def index
     @posts = policy_scope(Post).page(params[:page]).per(5)
+    # authorize @posts
   end
 
   def show
@@ -58,7 +59,8 @@ class PostsController < ApplicationController
 
   private
     def set_post
-      @post = Post.find(params[:id])
+      @post = policy_scope(Post).find(params[:id])
+      authorize @post
     end
 
     def post_params
