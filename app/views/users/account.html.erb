@@ -3,25 +3,35 @@
   <div class="clearfix">
     <div class="x_panel">
       <div class="x_content">
-        <p>
-          <strong>First Name:</strong>
-          <%= @user.first_name %>
-        </p>
+        <div class='col-md-6 col-sm-6 col-xs-12'>
+          <p>
+            <strong>First Name:</strong>
+            <%= @user.first_name %>
+          </p>
 
-        <p>
-          <strong>Last Name:</strong>
-          <%= @user.last_name %>
-        </p>
+          <p>
+            <strong>Last Name:</strong>
+            <%= @user.last_name %>
+          </p>
 
-        <p>
-          <strong>Contact Number:</strong>
-          <%= @user.contact_number %>
-        </p>
+          <p>
+            <strong>Contact Number:</strong>
+            <%= @user.contact_number %>
+          </p>
 
-        <p>
-          <strong>Address:</strong>
-          <%= @user.address %>
-        </p>
+          <p>
+            <strong>Address:</strong>
+            <%= @user.address %>
+          </p>
+        </div>
+        <div class='col-md-6 col-sm-6 col-xs-12'>
+          <p >
+            <strong>Profile Image:</strong><br>
+              <% if @user.profile_image.attached? %>
+                <%= image_tag @user.profile_image, size: "100x120" %>
+              <% end %>
+          </p><br>
+        </div>
 
         <p>
           <strong>Groups:</strong>

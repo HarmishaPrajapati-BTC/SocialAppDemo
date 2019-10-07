@@ -3,26 +3,35 @@
   <div class="clearfix">
     <div class="x_panel">
       <div class="x_content">
-        <p>
-          <strong>First Name:</strong>
-          <%= @user.first_name %>
-        </p>
+        <div class='col-md-6 col-sm-6 col-xs-12'>
+          <p>
+            <strong>First Name:</strong>
+            <%= @user.first_name %>
+          </p>
 
-        <p>
-          <strong>Last Name:</strong>
-          <%= @user.last_name %>
-        </p>
+          <p>
+            <strong>Last Name:</strong>
+            <%= @user.last_name %>
+          </p>
 
-        <p>
-          <strong>Contact Number:</strong>
-          <%= @user.contact_number %>
-        </p>
+          <p>
+            <strong>Contact Number:</strong>
+            <%= @user.contact_number %>
+          </p>
 
-        <p>
-          <strong>Address:</strong>
-          <%= @user.address %>
-        </p>
-
+          <p>
+            <strong>Address:</strong>
+            <%= @user.address %>
+          </p>
+        </div>
+        <div class='col-md-6 col-sm-6 col-xs-12'>
+          <p >
+            <strong>Profile Image:</strong><br>
+              <% if @user.profile_image.attached? %>
+                <%= image_tag @user.profile_image, size: "100x120" %>
+              <% end %>
+          </p>
+        </div>
         <p>
           <strong>Groups:</strong>
           <table class="table" >
@@ -46,12 +55,13 @@
             </tbody>
           </table>
         </p>
-
-        <%= link_to users_path, class: 'btn btn-primary btn-sm' do %>
-          <i class="fa fa-arrow-left" aria-hidden="true"></i> Back
-        <% end %>
-        <%= link_to edit_user_path(@user), class: 'btn btn-success btn-sm' do %>
-          <i class="fa fa-edit" aria-hidden="true"></i> Edit
+        <% if current_user.has_role? :admin %>
+          <%= link_to users_path, class: 'btn btn-primary btn-sm' do %>
+            <i class="fa fa-arrow-left" aria-hidden="true"></i> Back
+          <% end %>
+          <%= link_to edit_user_path(@user), class: 'btn btn-success btn-sm' do %>
+            <i class="fa fa-edit" aria-hidden="true"></i> Edit
+          <% end %>
         <% end %>
       </div>
     </div>

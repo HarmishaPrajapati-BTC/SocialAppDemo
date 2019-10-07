@@ -2,7 +2,8 @@ class GroupsController < ApplicationController
   before_action :set_group, only: [:show, :edit, :update, :destroy]
 
   def index
-    @groups = policy_scope(Group).page(params[:page]).per(5)
+    @groups = Group.page(params[:page]).per(5)
+    authorize @groups
   end
 
   def show
@@ -18,13 +19,13 @@ class GroupsController < ApplicationController
 
   def create
     @group = Group.new(group_params)
-    authorize @group
-    @group.users = User.where(id: params[:group][:user_ids])
     if @group.new_record?
-      if current_user != 'admin'
+      if current_user != 'admin' && (current_user.has_role? :member)
         current_user.add_role :group_admin
       end
     end
+    authorize @group
+    @group.users = User.where(id: params[:group][:user_ids])
     respond_to do |format|
       if @group.save
         # User.invite!(email: "yuyuuhjm@gmail.com")
@@ -36,6 +37,7 @@ class GroupsController < ApplicationController
   end
 
   def update
+    authorize @group
     respond_to do |format|
       if @group.update(group_params)
         format.html { redirect_to @group, notice: 'Group was successfully updated.' }
@@ -47,10 +49,31 @@ class GroupsController < ApplicationController
 
   def destroy
     @group.destroy
+    authorize @group
     respond_to do |format|
       format.html { redirect_to groups_url, notice: 'Group was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def join_group
+    @group = Group.find params[:id]
+    @group.users.each do |user|
+      if user != current_user
+        @group.users << current_user
+      end
+    end
+    redirect_to request.referrer
+  end
+
+  def leave_group
+    @group = Group.find params[:id]
+    @group.users.each do |user|
+      if user == current_user
+        @group.users.delete(current_user)
+      end
+    end
+    redirect_to request.referrer
   end
 
   private
@@ -60,6 +83,6 @@ class GroupsController < ApplicationController
     end
 
     def group_params
-      params.require(:group).permit(:name, user_ids: [])
+      params.require(:group).permit(:name, :group_type, user_ids: [])
     end
 end

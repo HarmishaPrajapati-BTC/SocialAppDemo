@@ -8,6 +8,8 @@ class User < ApplicationRecord
   has_many :posts
   has_and_belongs_to_many :groups
   belongs_to :role, optional: true
+  has_one_attached :profile_image
+
 
   def self.from_omniauth(auth)
     # Either create a User record or update it based on the provider (Google) and the UID

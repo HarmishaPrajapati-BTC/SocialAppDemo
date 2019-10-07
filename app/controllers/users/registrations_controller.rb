@@ -4,7 +4,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   def create
     super do
-      binding.pry
       if resource != 'admin' && resource != 'group_admin'
         resource.add_role :member
       end

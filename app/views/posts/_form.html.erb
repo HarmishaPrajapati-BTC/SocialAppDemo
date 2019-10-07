@@ -1,5 +1,6 @@
 <div data-controller='customers'>
   <div class="right_col" role="main" style="min-height: 600px;">
+    <p style="color: darkgray;">*Note : select group in which you want to create post(only one) </p>
     <%= form_with(model: @post, local: true, class: 'form-horizontal form-label-left') do |f| %>
     <%= f.hidden_field :user_id, value: current_user.id %>
         <div class="x_panel" style="min-height: 600px;">
@@ -34,22 +35,21 @@
           </div>
           <div class="form-group">
             <label class="control-label col-md-3 col-sm-3 col-xs-12">
+              <%= t('group.group') %>
+              <span class="text-danger">*</span>
+            </label>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+              <%= f.collection_select :group_id, Group.order(:name), :id, :name, {}, {class: 'form-control'} %>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-md-3 col-sm-3 col-xs-12">
               <%= t('post.image') %>
               <span class="text-danger">*</span>
             </label>
             <div class="col-md-6 col-sm-6 col-xs-12">
               <%= f.file_field :image, class: 'form-control' %>
             </div>
-            <div class="control-label col-md-6 col-sm-6 col-xs-12">
-              <% if @post.try(:image).attached? %>
-                <%= image_tag @post.image, size: "120x100", class: "image" %>
-                <%= link_to delete_image_attachment_post_path(image_id: @post.image.id),
-                      method: :delete,
-                      data: { confirm: 'Are you sure?' }, class: 'btn-close' do %>
-                      <i class="fa fa-times-circle" aria-hidden="true"></i>
-                <% end %>
-              <% end %>
-            </div><br>
           </div>
           <div class="form-group">
             <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
@@ -63,3 +63,9 @@
     <% end %>
   </div>
 </div>
+
+<script type="text/javascript">
+  $( "#post_group_id" ).select2();
+  user_name = document.getElementById('group_ids').value.split(' ');
+  $('select#post_group_id').val(user_name).select2();
+ </script>

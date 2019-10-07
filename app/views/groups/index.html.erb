@@ -2,17 +2,20 @@
 <div class="right_col" role="main" style="min-height: 600px;">
   <div class="x_panel">
     <div class="x_content">
-      <div class="nav navbar-right panel_toolbox">
-        <%= link_to new_group_path, class: "btn btn-dark btn-sm", style: "align: right;" do %>
-          <i class="fa fa-arrow-right pd-6" data-placement="bottom" title='create'></i> Create New Group
-        <% end %>
-      </div>
+      <% if (current_user.has_role? :admin) || (current_user.has_role? :group_admin) %>
+        <div class="nav navbar-right panel_toolbox">
+          <%= link_to new_group_path, class: "btn btn-dark btn-sm", style: "align: right;" do %>
+            <i class="fa fa-arrow-right pd-6" data-placement="bottom" title='create'></i> Create New Group
+          <% end %>
+        </div>
+      <% end %>
       <h1>Groups</h1>
       <table class="table">
         <thead>
           <tr>
             <th>#</th>
             <th>Name</th>
+            <th>Group Type</th>
             <th>No. of Peoples</th>
             <th>Actions</th>
           </tr>
@@ -23,11 +26,21 @@
             <tr>
               <td><%= index + 1 %></td>
               <td><%= group.name %></td>
+              <td><%= group.group_type %></td>
               <td><%= group.users.count %></td>
               <td>
-              <%= link_to group_path(group), class: 'btn btn-primary btn-xs' do %> Show <% end %>
-              <%= link_to edit_group_path(group), class: 'btn btn-success btn-xs' do %> Edit <% end %>
-              <%= link_to group_path(group), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-xs' do %> Delete <% end %>
+              <% if current_user.has_role? :admin || (current_user.has_role? :group_admin) %>
+                <%= link_to group_path(group), class: 'btn btn-primary btn-xs' do %> Show <% end %>
+                <%= link_to edit_group_path(group), class: 'btn btn-success btn-xs' do %> Edit <% end %>
+                <%= link_to group_path(group), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-xs' do %> Delete <% end %>
+              <% else %>
+                <%= link_to group_path(group), class: 'btn btn-primary btn-xs' do %> Show <% end %>
+                <% if group.users.include?(current_user) %>
+                  <%= link_to leave_group_path(group.id), data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-xs' do %> Leave Group <% end %>
+                <% else %>
+                  <%= link_to join_group_path(group.id), class: 'btn btn-success btn-xs' do %> Join Group <% end %>
+                <% end %>
+              <% end %>
               </td>
             </tr>
           <% end %>

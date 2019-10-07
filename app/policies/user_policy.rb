@@ -1,7 +1,10 @@
 class UserPolicy < ApplicationPolicy
   def index?
-    binding.pry
-    allow_admin? && record.user_id == user.id
+    allow_admin?
+  end
+
+  def show?
+    allow_all_user? 
   end
 
   def new?
@@ -9,7 +12,7 @@ class UserPolicy < ApplicationPolicy
   end
 
   def create?
-    allow_all_user?
+    allow_admin?
   end
 
   def edit?
@@ -17,11 +20,15 @@ class UserPolicy < ApplicationPolicy
   end
 
   def update?
-    allow_admin? && record.user_id == user.id
+    allow_admin?
   end
 
   def destroy?
-    allow_admin? && record.user_id == user.id
+    allow_admin?
+  end
+
+  def find_friends?
+    allow_all_user?
   end
 
   class Scope < Scope

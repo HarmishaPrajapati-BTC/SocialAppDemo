@@ -1,6 +1,10 @@
 class PostPolicy < ApplicationPolicy
   def index?
-    allow_admin? && record.post_id == user.post_id
+    allow_all_user?
+  end
+
+  def show?
+    allow_admin? || record.user_id == user.id
   end
 
   def new?
@@ -16,11 +20,11 @@ class PostPolicy < ApplicationPolicy
   end
 
   def update?
-    allow_admin? && record.post_id == user.post_id
+    allow_admin? || record.user_id == user.id
   end
 
   def destroy?
-    allow_admin? && record.post_id == user.post_id
+    allow_admin? || record.user_id == user.id
   end
 
   class Scope < Scope

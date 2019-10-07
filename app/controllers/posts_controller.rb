@@ -3,7 +3,7 @@ class PostsController < ApplicationController
 
   def index
     @posts = policy_scope(Post).page(params[:page]).per(5)
-    # authorize @posts
+    authorize @posts
   end
 
   def show
@@ -18,14 +18,13 @@ class PostsController < ApplicationController
 
   def create
     @post = Post.new(post_params)
+    binding.pry
 
     respond_to do |format|
-      if @post.save
-        format.html { redirect_to @post, notice: 'Post was successfully created.' }
-        format.json { render :show, status: :created, location: @post }
+      if @post.save!
+        format.html { render :show, notice: 'Post was successfully created.' }
       else
         format.html { render :new }
-        format.json { render json: @post.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -59,11 +58,11 @@ class PostsController < ApplicationController
 
   private
     def set_post
-      @post = policy_scope(Post).find(params[:id])
+      @post = Post.find(params[:id])
       authorize @post
     end
 
     def post_params
-      params.require(:post).permit(:name, :post_type, :content, :user_id, :image)
+      params.require(:post).permit(:name, :post_type, :content, :user_id, :group_id, :image)
     end
 end

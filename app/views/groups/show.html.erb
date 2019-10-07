@@ -9,6 +9,11 @@
         </p>
 
         <p>
+          <strong>Group Type:</strong>
+          <%= @group.group_type %>
+        </p>
+
+        <p>
           <strong>Members:</strong>
           <table class="table" >
             <thead>
@@ -26,12 +31,13 @@
             </tbody>
           </table>
         </p>
-
-        <%= link_to  groups_path, class: 'btn btn-primary btn-sm' do %>
-          <i class="fa fa-arrow-left" aria-hidden="true"></i> Back
-        <% end %>
-        <%= link_to edit_group_path(@group), class: 'btn btn-success btn-sm' do %>
-          <i class="fa fa-edit" aria-hidden="true"></i> Edit
+        <% if (current_user.has_role? :admin) || (current_user.has_role? :group_admin) %>
+          <%= link_to  groups_path, class: 'btn btn-primary btn-sm' do %>
+            <i class="fa fa-arrow-left" aria-hidden="true"></i> Back
+          <% end %>
+          <%= link_to edit_group_path(@group), class: 'btn btn-success btn-sm' do %>
+            <i class="fa fa-edit" aria-hidden="true"></i> Edit
+          <% end %>
         <% end %>
       </div>
     </div>

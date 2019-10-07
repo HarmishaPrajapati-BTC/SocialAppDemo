@@ -50,7 +50,8 @@ class UsersController < ApplicationController
   end
 
  def find_friends
-   @users = User.all
+   @users = User.where.not(id: current_user.id)
+   authorize @users
  end
 
  def account
@@ -59,11 +60,11 @@ class UsersController < ApplicationController
 
   private
     def set_user
-      @user = policy_scope(User).find(params[:id])
+      @user = User.find(params[:id])
       authorize @user
     end
 
     def user_params
-      params.require(:user).permit(:first_name, :last_name, :contact_number, :address)
+      params.require(:user).permit(:first_name, :last_name, :contact_number, :address, :profile_image)
     end
 end
