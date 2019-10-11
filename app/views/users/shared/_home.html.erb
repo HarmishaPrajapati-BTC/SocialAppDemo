@@ -3,6 +3,7 @@
   <body class="nav-md">
     <div class="container body">
       <div class="main_container">
+        <%= render 'notifications/notification'%>
         <div class="col-md-3 left_col menu_fixed">
           <div class="left_col scroll-view">
             <div class="navbar nav_title" style="border: 0;">
@@ -23,6 +24,16 @@
                     <a href="<%= groups_path %>">
                     <i class="fa fa-users">
                     </i>Groups</a>
+                  </li>
+                  <li>
+                    <a href="<%= your_groups_path %>">
+                    <i class="fa fa-user">
+                    </i>Your Groups</a>
+                  </li>
+                  <li>
+                    <a href="<%=friend_list_path%>">
+                      <i class="fa fa-th-list">
+                      </i>Your Friend List</a>
                   </li>
                   <li>
                     <a href="<%=find_friends_path%>">

@@ -4,7 +4,7 @@ class UserPolicy < ApplicationPolicy
   end
 
   def show?
-    allow_all_user? 
+    allow_all_user?
   end
 
   def new?
@@ -20,15 +20,19 @@ class UserPolicy < ApplicationPolicy
   end
 
   def update?
-    allow_admin?
+    allow_admin? || record.id == user.id
   end
 
   def destroy?
-    allow_admin?
+    allow_admin? || record.id == user.id
   end
 
   def find_friends?
     allow_all_user?
+  end
+
+  def account?
+    record.id == user.id
   end
 
   class Scope < Scope

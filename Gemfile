@@ -35,6 +35,7 @@ gem 'omniauth-google-oauth2'
 gem "select2-rails"
 gem 'kaminari'
 gem 'pundit'
+gem 'has_friendship'
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
 

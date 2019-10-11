@@ -8,11 +8,11 @@ class GroupPolicy < ApplicationPolicy
   end
 
   def create?
-    allow_all_user? || allow_group_admin?
+    allow_all_user?
   end
 
   def show?
-    allow_all_user? || allow_group_admin?
+    allow_all_user?
   end
 
   def edit?

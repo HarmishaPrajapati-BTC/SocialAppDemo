@@ -29,7 +29,7 @@ class GroupsController < ApplicationController
     respond_to do |format|
       if @group.save
         # User.invite!(email: "yuyuuhjm@gmail.com")
-        format.html { render :show, notice: 'Group was successfully created.' }
+        format.html { redirect_to @group, notice: 'Group was successfully created.' }
       else
         format.html { render :new }
       end
@@ -74,6 +74,10 @@ class GroupsController < ApplicationController
       end
     end
     redirect_to request.referrer
+  end
+
+  def your_groups
+    @groups = current_user.groups
   end
 
   private

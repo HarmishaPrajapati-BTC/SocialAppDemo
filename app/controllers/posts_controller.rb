@@ -2,7 +2,7 @@ class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update, :destroy]
 
   def index
-    @posts = policy_scope(Post).page(params[:page]).per(5)
+    @posts = Post.page(params[:page]).per(5)
     authorize @posts
   end
 
@@ -18,11 +18,10 @@ class PostsController < ApplicationController
 
   def create
     @post = Post.new(post_params)
-    binding.pry
 
     respond_to do |format|
       if @post.save!
-        format.html { render :show, notice: 'Post was successfully created.' }
+        format.html { redirect_to @post, notice: 'Post was successfully created.' }
       else
         format.html { render :new }
       end

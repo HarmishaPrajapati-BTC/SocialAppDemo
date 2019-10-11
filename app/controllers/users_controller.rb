@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
   def index
-    @users = policy_scope(User).all
+    @users = policy_scope(User).page(params[:page]).per(5)
   end
 
   def show
@@ -49,14 +49,64 @@ class UsersController < ApplicationController
     end
   end
 
- def find_friends
-   @users = User.where.not(id: current_user.id)
-   authorize @users
- end
+  def find_friends
+    @users = User.where.not(id: current_user.id)
+    authorize @users
+  end
 
- def account
-   @user = current_user
- end
+  def friend_list
+    @friends = current_user.friends
+  end
+
+  def account
+    @user = current_user
+    authorize @user
+  end
+
+  def create_notifications
+    return if params[:id] == current_user.id
+    request_sent = Notification.find_by(user_id: params[:id], notified_by_id: current_user.id)
+    if !request_sent.present?
+      Notification.create(user_id: params[:id], notified_by_id: current_user.id, notice_type: 'New Friend Request')
+    end
+    send_friend_request
+    redirect_to request.referrer
+  end
+
+  def send_friend_request
+    current_user.friend_request(User.find(params[:id]))
+  end
+
+  def accept_friend_request
+    notification = Notification.find(params[:id])
+    user_id = notification.notified_by_id
+    user = User.find(user_id)
+    current_user.accept_request(user)
+    redirect_to request.referrer
+  end
+
+  def remove_from_friends
+    notification = Notification.find(params[:id])
+    user_id = notification.notified_by_id
+    user = User.find(user_id)
+    if current_user.friends.include?(user)
+      current_user.friends.delete(user)
+      notification.delete
+    end
+    redirect_to request.referrer
+  end
+
+  def reject_friend_request
+    notification = Notification.find(params[:id])
+    user_id = notification.notified_by_id
+    user = User.find(user_id)
+    current_user.decline_request(user)
+    if current_user.friends.include?(user)
+      current_user.friends.delete(user)
+    end
+    notification.delete
+    redirect_to request.referrer
+  end
 
   private
     def set_user

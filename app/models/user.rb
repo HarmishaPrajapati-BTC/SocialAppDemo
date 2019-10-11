@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   rolify
+  has_friendship
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :invitable, :database_authenticatable, :registerable,
@@ -9,7 +10,8 @@ class User < ApplicationRecord
   has_and_belongs_to_many :groups
   belongs_to :role, optional: true
   has_one_attached :profile_image
-
+  has_many :likes, dependent: :destroy
+  has_many :notifications, dependent: :destroy
 
   def self.from_omniauth(auth)
     # Either create a User record or update it based on the provider (Google) and the UID

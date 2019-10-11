@@ -1,84 +1,83 @@
-<div data-controller='customers'>
-  <div class="right_col" role="main" style="min-height: 600px;">
-    <%= form_with(model: @user, local: true, class: 'form-horizontal form-label-left') do |f| %>
-        <div class="x_panel" style="min-height: 600px;">
-        <div class="nav navbar-right panel_toolbox">
+<div class="right_col" role="main" style="min-height: 600px;">
+<%= form_with(model: @user, local: true, class: 'form-horizontal form-label-left') do |f| %>
+    <div class="x_panel" style="min-height: 600px;">
+    <div class="nav navbar-right panel_toolbox">
+    </div>
+      <div class="form-group">
+        <label class="control-label col-md-3 col-sm-3 col-xs-12">
+          <%= t('user.first_name') %>
+          <span class="text-danger">*</span>
+        </label>
+        <div class="col-md-6 col-sm-6 col-xs-12">
+          <%= f.text_field :first_name, class: 'form-control' %>
         </div>
-          <div class="form-group">
-            <label class="control-label col-md-3 col-sm-3 col-xs-12">
-              <%= t('user.first_name') %>
-              <span class="text-danger">*</span>
-            </label>
-            <div class="col-md-6 col-sm-6 col-xs-12">
-              <%= f.text_field :first_name, class: 'form-control' %>
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="control-label col-md-3 col-sm-3 col-xs-12">
-              <%= t('user.last_name') %>
-              <span class="text-danger">*</span>
-            </label>
-            <div class="col-md-6 col-sm-6 col-xs-12">
-              <%= f.text_field :last_name, class: 'form-control' %>
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="control-label col-md-3 col-sm-3 col-xs-12">
-              <%= t('user.email') %>
-              <span class="text-danger">*</span>
-            </label>
-            <div class="col-md-6 col-sm-6 col-xs-12">
-              <%= f.text_field :email, class: 'form-control' %>
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="control-label col-md-3 col-sm-3 col-xs-12">
-              <%= t('user.contact_number') %>
-              <span class="text-danger">*</span>
-            </label>
-            <div class="col-md-6 col-sm-6 col-xs-12">
-              <%= f.text_field :contact_number, class: 'form-control' %>
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="control-label col-md-3 col-sm-3 col-xs-12">
-              <%= t('user.address') %>
-              <span class="text-danger">*</span>
-            </label>
-            <div class="col-md-6 col-sm-6 col-xs-12">
-              <%= f.text_area :address, class: 'form-control' %>
-            </div>
-          </div>
-          <% if !@user.new_record? %>
-            <div class="form-group">
-              <label class="control-label col-md-3 col-sm-3 col-xs-12">
-                <%= t('post.profile_image') %>
-                <span class="text-danger">*</span>
-              </label>
-              <div class="col-md-6 col-sm-6 col-xs-12">
-                <%= f.file_field :profile_image, class: 'form-control' %>
-              </div>
-              <div class="control-label col-md-6 col-sm-6 col-xs-12">
-                <% if @user.try(:profile_image).attached? %>
-                  <%= image_tag @user.profile_image, size: "120x100", class: "image" %>
-                  <%= link_to delete_image_attachment_post_path(profile_image_id: @user.profile_image.id),
-                        method: :delete,
-                        data: { confirm: 'Are you sure?' }, class: 'btn-close' do %>
-                        <i class="fa fa-times-circle" aria-hidden="true"></i>
-                  <% end %>
-                <% end %>
-              </div><br>
-            </div>
-          <% end %>
-          <div class="form-group">
-            <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-              <%= link_to users_path, class: 'btn btn-primary' do %>
-                <i class="fa fa-arrow-left" aria-hidden="true"></i> <%= t('back') %>
-              <% end %>
-              <button type="submit" class="btn btn-success">Submit</button>
-            </div>
-         </div>
       </div>
-    <% end %>
+      <div class="form-group">
+        <label class="control-label col-md-3 col-sm-3 col-xs-12">
+          <%= t('user.last_name') %>
+          <span class="text-danger">*</span>
+        </label>
+        <div class="col-md-6 col-sm-6 col-xs-12">
+          <%= f.text_field :last_name, class: 'form-control' %>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-md-3 col-sm-3 col-xs-12">
+          <%= t('user.email') %>
+          <span class="text-danger">*</span>
+        </label>
+        <div class="col-md-6 col-sm-6 col-xs-12">
+          <%= f.text_field :email, class: 'form-control' %>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-md-3 col-sm-3 col-xs-12">
+          <%= t('user.contact_number') %>
+          <span class="text-danger">*</span>
+        </label>
+        <div class="col-md-6 col-sm-6 col-xs-12">
+          <%= f.text_field :contact_number, class: 'form-control' %>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-md-3 col-sm-3 col-xs-12">
+          <%= t('user.address') %>
+          <span class="text-danger">*</span>
+        </label>
+        <div class="col-md-6 col-sm-6 col-xs-12">
+          <%= f.text_area :address, class: 'form-control' %>
+        </div>
+      </div>
+      <% if !@user.new_record? %>
+        <div class="form-group">
+          <label class="control-label col-md-3 col-sm-3 col-xs-12">
+            <%= t('post.profile_image') %>
+            <span class="text-danger">*</span>
+          </label>
+          <div class="col-md-6 col-sm-6 col-xs-12">
+            <%= f.file_field :profile_image, class: 'form-control' %>
+          </div>
+          <div class="control-label col-md-6 col-sm-6 col-xs-12">
+            <% if @user.try(:profile_image).attached? %>
+              <%= image_tag @user.profile_image, size: "120x100", class: "image" %>
+              <%= link_to delete_image_attachment_post_path(profile_image_id: @user.profile_image.id),
+                    method: :delete,
+                    data: { confirm: 'Are you sure?' }, class: 'btn-close' do %>
+                    <i class="fa fa-times-circle" aria-hidden="true"></i>
+              <% end %>
+            <% end %>
+          </div><br>
+        </div>
+      <% end %>
+      <div class="form-group">
+        <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+          <%= link_to users_path, class: 'btn btn-primary' do %>
+            <i class="fa fa-arrow-left" aria-hidden="true"></i> <%= t('back') %>
+          <% end %>
+          <button type="submit" class="btn btn-success">Submit</button>
+        </div>
+     </div>
   </div>
+<% end %>
 </div>
+
