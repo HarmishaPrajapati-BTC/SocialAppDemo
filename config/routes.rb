@@ -8,10 +8,12 @@ Rails.application.routes.draw do
     member do
       delete :delete_image_attachment
     end
+    get 'liked_by_user', to: 'posts#liked_by_user'
   end
   get 'your_groups', to: 'groups#your_groups'
   get 'notifications/link_through'
   resources :groups
+  resources :comments
   resources :users
   resources :notifications
   devise_scope :user do
@@ -37,6 +39,6 @@ Rails.application.routes.draw do
   get 'accept_friend_request/:id', to: 'users#accept_friend_request', as: :accept_friend_request
   get 'remove_from_friends/:id', to: 'users#remove_from_friends', as: :remove_from_friends
   get 'reject_friend_request/:id', to: 'users#reject_friend_request', as: :reject_friend_request
-
+  get 'post_comments/:id', to: 'comments#post_comments', as: :post_comments
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

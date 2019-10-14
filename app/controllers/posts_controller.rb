@@ -11,6 +11,7 @@ class PostsController < ApplicationController
 
   def new
     @post = Post.new
+    @comment = Comment.new(post_id: params[:post_id])
   end
 
   def edit
@@ -53,6 +54,15 @@ class PostsController < ApplicationController
     @image.purge
     flash[:notice] = t('flash_notice.destroy.success', resource: 'Image')
     redirect_to edit_post_path(id: params[:id])
+  end
+
+  def liked_by_user
+    user_name = []
+    @post = Post.find(params[:post_id])
+    @post.likes.each do |user|
+      user_name << User.find_by(id: user.user_id)
+    end
+    @users = user_name
   end
 
   private

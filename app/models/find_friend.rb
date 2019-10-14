@@ -1,0 +1,2 @@
+class FindFriend < ApplicationRecord
+end

@@ -4,7 +4,7 @@ class PostPolicy < ApplicationPolicy
   end
 
   def show?
-    allow_admin? || record.user_id == user.id
+    allow_all_user?
   end
 
   def new?

@@ -74,7 +74,8 @@ class UsersController < ApplicationController
   end
 
   def send_friend_request
-    current_user.friend_request(User.find(params[:id]))
+    user = User.find(params[:id])
+    current_user.friend_request(user) if !current_user.friends.include?(user)
   end
 
   def accept_friend_request

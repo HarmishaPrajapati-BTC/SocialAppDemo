@@ -3,6 +3,10 @@
   <div class="clearfix">
     <div class="x_panel">
       <div class="x_content">
+        <div class="nav navbar-right panel_toolbox">
+          <%= link_to "See who liked this post", post_liked_by_user_path(@post), class: 'btn btn-warning btn-sm' %>
+          <%= link_to "See all Comments", post_comments_path(@post), class: 'btn btn-warning btn-sm' %>
+        </div>
         <p>
           <strong>Name:</strong>
           <%= @post.name %>
@@ -29,8 +33,11 @@
         </p>
 
         <p>
-          <strong>Comments:</strong>
-          <%= @post.name %>
+          <strong>Your Comments:</strong>
+          <% @post.comments.where(user_id: current_user.id).limit(2).each do |comment| %>
+            <li><%= link_to comment.comment_text, comment_path(comment) %>
+            </li>
+          <% end %>
         </p>
 
         <p>
@@ -48,8 +55,13 @@
         <%= link_to posts_path, class: 'btn btn-primary btn-sm' do %>
           <i class="fa fa-arrow-left" aria-hidden="true"></i> Back
         <% end %>
-        <%= link_to edit_post_path(@post), class: 'btn btn-success btn-sm' do %>
-          <i class="fa fa-edit" aria-hidden="true"></i> Edit
+        <% if current_user == @post.user %>
+          <%= link_to edit_post_path(@post), class: 'btn btn-success btn-sm' do %>
+            <i class="fa fa-edit" aria-hidden="true"></i> Edit
+          <% end %>
+          <%= link_to post_path(@post), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-sm' do %>
+            <i class="fa fa-trash" aria-hidden="true" ></i> Delete
+          <% end %>
         <% end %>
       </div>
     </div>

@@ -1,0 +1,20 @@
+<ul class="nav navbar-nav navbar-right">
+  <li role="presentation "class="dropdown">
+    <a href="#" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-bell-o"></i>
+    <span class="badge bg-green"><%= notification_count %></span>
+    </a>
+    <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
+      <% display_limited_notification.each do |notification| %>
+        <li>
+            <p><i class="fa fa-user"></i><%= link_to "You have New Friend Request from #{notification_from_user(notification)}", find_user(notification) %></p>
+            <li><ul><%= link_to check_friend_request_status(notification) , class: 'btn btn-primary btn-xs' do %>Accept<% end %>
+            <%= link_to "", class: 'btn btn-danger btn-xs' do %>Reject<% end %></ul></li>
+        </li>
+      <% end %>
+      <div class="text-center">
+        <strong><%= link_to "See All Notifications", notifications_path %></strong>
+        <i class="fa fa-angle-right"></i>
+      </div>
+    </ul>
+  </li>
+</ul>

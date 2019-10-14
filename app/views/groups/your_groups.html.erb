@@ -1,0 +1,45 @@
+<%= render 'users/shared/home'%>
+<div class="right_col" role="main" style="min-height: 600px;">
+  <h1>Your Group List</h1>
+  <div class="x_panel">
+    <div class="nav navbar-right panel_toolbox">
+      <%= link_to new_group_path, class: "btn btn-dark btn-sm", style: "align: right;" do %>
+        <i class="fa fa-arrow-right pd-6" data-placement="bottom" title='create'></i> Create New Group
+      <% end %>
+    </div>
+    <div class="x_content">
+      <% if @groups.present? %>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Name</th>
+              <th>Group Type</th>
+              <th>No. of Peoples</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <% @groups.each_with_index do |group, index| %>
+              <tr>
+                <td><%= index + 1 %></td>
+                <td><%= group.name %></td>
+                <td><%= group.group_type %></td>
+                <td><%= group.users.count %></td>
+                <td>
+                  <%= link_to group_path(group), class: 'btn btn-primary btn-xs' do %> Show <% end %>
+                  <%= link_to edit_group_path(group), class: 'btn btn-success btn-xs' do %> Edit <% end %>
+                  <%= link_to group_path(group), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-xs' do %> Delete <% end %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% else %>
+        <%= render 'users/shared/no_record_found'%>
+      <% end %>
+    </div>
+  </div>
+  <br>
+</div>

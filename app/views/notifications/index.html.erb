@@ -1,0 +1,27 @@
+<%= render 'users/shared/home'%>
+<div class="right_col" role="main" style="min-height: 600px;">
+  <div class="clearfix">
+    <h1>Notifications</h1>
+    <div class="x_panel">
+      <div class="x_content">
+        <% if check_presence_of_notification.present? %>
+          <% check_presence_of_notification.each do |notification| %>
+                <p><i class="fa fa-user"></i><%= link_to " You Have New friend Request from #{notification_from_user(notification)}", find_user(notification) %>
+                </p>
+                <ul>
+                  <% if check_friend_request_status(notification) %>
+                    <button class="btn btn-success btn-xs", disabled= true>You are now Friends</button>
+                    <%= link_to remove_from_friends_path(notification), class: 'btn btn-danger btn-xs' do %>Unfriend<% end %>
+                  <% else %>
+                    <%= link_to accept_friend_request_path(notification), class: 'btn btn-primary btn-xs' do %>Accept<% end %>
+                    <%= link_to reject_friend_request_path(notification), class: 'btn btn-danger btn-xs' do %>Reject<% end %>
+                  <% end %>
+                </ul>
+          <% end %>
+        <% else %>
+          <%= render 'users/shared/no_record_found'%>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
