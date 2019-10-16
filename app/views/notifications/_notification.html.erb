@@ -8,7 +8,7 @@
         <li>
             <p><i class="fa fa-user"></i><%= link_to "You have New Friend Request from #{notification_from_user(notification)}", find_user(notification) %></p>
             <li><ul><%= link_to check_friend_request_status(notification) , class: 'btn btn-primary btn-xs' do %>Accept<% end %>
-            <%= link_to "", class: 'btn btn-danger btn-xs' do %>Reject<% end %></ul></li>
+            <%= link_to reject_friend_request_path(notification), class: 'btn btn-danger btn-xs' do %>Reject<% end %></ul></li>
         </li>
       <% end %>
       <div class="text-center">

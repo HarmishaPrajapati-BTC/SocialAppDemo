@@ -18,8 +18,10 @@
               <tr>
                 <td><%= link_to user.first_name, user_path(user), class: 'btn btn-link', style: 'color: blue;' %></td>
                 <td><%= user.email %>
-                  <% if check_exist_friend_request(user) %>
-                    <td><%= link_to '', class: 'btn btn-success btn-xs', disabled: true do %> Request sent <% end %></td>
+                  <% if already_friends(user) %>
+                    <td><button type="button" class= 'btn btn-success btn-xs', disabled= true > Friends </button> </td>
+                  <% elsif check_exist_friend_request(user) %>
+                    <td><button type="button" class= 'btn btn-warning btn-xs', disabled= true > Request sent </button></td>
                   <% else %>
                     <td><%= link_to create_notifications_path(user), class: 'btn btn-primary btn-xs' do %> Send Friend Request <% end %></td>
                   <% end %>
