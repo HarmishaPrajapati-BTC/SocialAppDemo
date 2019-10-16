@@ -9,6 +9,7 @@ Rails.application.routes.draw do
       delete :delete_image_attachment
     end
     get 'liked_by_user', to: 'posts#liked_by_user'
+    get 'post_share', to: 'posts#post_share', as: :post_share
   end
   get 'your_groups', to: 'groups#your_groups'
   get 'notifications/link_through'
@@ -16,6 +17,7 @@ Rails.application.routes.draw do
   resources :comments
   resources :users
   resources :notifications
+  resources :share_posts
   devise_scope :user do
     authenticated  do
       root to: 'posts#index'

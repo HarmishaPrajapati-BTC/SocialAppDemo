@@ -1,0 +1,33 @@
+<%= render 'users/shared/home'%>
+<div class="right_col" role="main" style="min-height: 600px;">
+  <div class="x_panel">
+    <div class="x_content">
+      <% if @users.present? %>
+        <h1>Liked by</h1>
+        <table class="table" >
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th></th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <% @users.reverse.each do |user| %>
+              <tr>
+                <td><%= link_to user.first_name, user_path(user), class: 'btn btn-link', style: 'color: blue;' %></td>
+                <td><%= user.email %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% else %>
+        <%= render 'users/shared/no_record_found'%>
+      <% end %>
+    </div>
+    <%= link_to post_path(@post), class: 'btn btn-primary btn-sm' do %>
+      <i class="fa fa-arrow-left" aria-hidden="true"></i> Back
+    <% end %>
+  </div>
+</div>

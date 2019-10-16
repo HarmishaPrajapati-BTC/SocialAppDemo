@@ -11,6 +11,7 @@ class User < ApplicationRecord
   belongs_to :role, optional: true
   has_one_attached :profile_image
   has_many :likes, dependent: :destroy
+  has_many :share_posts, dependent: :destroy
   has_many :notifications, dependent: :destroy
 
   def self.from_omniauth(auth)

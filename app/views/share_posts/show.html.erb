@@ -1,0 +1,32 @@
+<%= render 'users/shared/home'%>
+<div class="right_col" role="main" style="min-height: 600px;">
+  <div class="clearfix">
+    <div class="x_panel">
+      <div class="x_content">
+        <p>
+          <strong>Shared with:</strong>
+          <% shared_with_user(@share_post).reverse.each do |user| %>
+            <tr>
+              <td><br><%= user.try(:first_name) %></td>
+            </tr>
+          <% end %>
+        </p>
+        <%= link_to post_path(id: @share_post.post_id), class: 'btn btn-primary btn-sm' do %>
+          <i class="fa fa-arrow-left" aria-hidden="true"></i> Back
+        <% end %>
+        <%= link_to edit_share_post_path(@share_post, post_id: @share_post.post_id), remote: true, class: 'btn btn-success btn-sm' do %>
+          <i class="fa fa-edit" aria-hidden="true"></i> Share with more friends
+        <% end %>
+        <%= link_to share_post_path(@share_post), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-sm' do %>
+          <i class="fa fa-trash" aria-hidden="true" ></i> Remove Sharing from all
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="modal-window" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content"></div>
+  </div>
+</div>

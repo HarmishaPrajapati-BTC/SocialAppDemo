@@ -1,0 +1,28 @@
+<%= form_with(model: @share_post, local: true, class: 'form-horizontal form-label-left') do |f| %>
+<%= f.hidden_field :post_id, value: params[:post_id] %>
+  <div class="form-group">
+    <label class="control-label col-md-3 col-sm-3 col-xs-12">
+      <%= t('friends') %>
+    </label>
+    <div class="col-md-6 col-sm-6 col-xs-12">
+      <%= f.collection_select :users, current_user.friends.order(:first_name), :id, :first_name, {}, {multiple: true, class: 'form-control'} %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-md-3 col-md-offset-2">
+      <%= link_to posts_path, class: 'btn btn-primary' do %>
+        <i class="fa fa-arrow-left" aria-hidden="true"></i> <%= t('back') %>
+      <% end %>
+    </div>
+    <div class="col-md-3 col-md-offset-1">
+      <button type="submit" class="btn btn-success">Submit</button>
+    </div>
+ </div>
+<% end %>
+
+
+<script type="text/javascript">
+  $( "#share_post_users" ).select2();
+  user_name = document.getElementById('share_post_users').value.split(' ');
+  $('select#group_user_ids').val(user_name).select2();
+ </script>

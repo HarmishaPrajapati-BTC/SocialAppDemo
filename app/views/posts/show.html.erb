@@ -4,8 +4,9 @@
     <div class="x_panel">
       <div class="x_content">
         <div class="nav navbar-right panel_toolbox">
-          <%= link_to "See who liked this post", post_liked_by_user_path(@post), class: 'btn btn-warning btn-sm' %>
-          <%= link_to "See all Comments", post_comments_path(@post), class: 'btn btn-warning btn-sm' %>
+          <%= link_to "See who liked this post", post_liked_by_user_path(@post), class: 'btn btn-info btn-sm' %>
+          <%= link_to "See all Comments", post_comments_path(@post), class: 'btn btn-info btn-sm' %>
+          <%= link_to "See Shared Users", post_post_share_path(@post), class: 'btn btn-info btn-sm' %>
         </div>
         <p>
           <strong>Name:</strong>
@@ -24,7 +25,7 @@
 
         <p>
           <strong>Group:</strong>
-          <%= @post.group.name %>
+          <%= Group.find_by(id: @post.group_id).name %>
         </p>
 
         <p>
@@ -42,7 +43,9 @@
 
         <p>
           <strong>Shared with:</strong>
-          <%= @post.user.first_name %>
+          <% @post.share_posts.each do |user| %>
+            <%= users = user.users.count %> <%= (users) == 1 ? 'User' : 'Users'%>
+          <% end %>
         </p>
 
         <p >

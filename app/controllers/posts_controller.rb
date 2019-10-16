@@ -65,6 +65,13 @@ class PostsController < ApplicationController
     @users = user_name
   end
 
+  def post_share
+    @post = Post.find(params[:post_id])
+    @share_posts = @post.share_posts.each do |share_post|
+                      share_posts = share_post.users
+                    end
+  end
+
   private
     def set_post
       @post = Post.find(params[:id])

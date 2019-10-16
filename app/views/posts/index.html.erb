@@ -38,11 +38,11 @@
               <i class="fa fa-comment pd-6" data-placement="bottom" title='Comment'></i><%= post.comments.count %>
               <%= (post.comments.count) == 1 ? 'Comment' : 'Comments' %>
             <% end %>
-            <%= link_to post_path(post) do %>
+            <%= link_to new_share_post_path(post_id: post.id), remote: true, data: {toggle: "modal", target: '#modal-window'}  do %>
               <i class="fa fa-share pd-6" data-placement="bottom" title='Share'></i>
             <% end %><br>
-            <%= paginate @posts %>
           <% end %>
+          <%= paginate @posts %>
         <% else %>
           <%= render 'users/shared/no_record_found'%>
         <% end %>
