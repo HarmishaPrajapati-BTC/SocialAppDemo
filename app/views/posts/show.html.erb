@@ -35,7 +35,7 @@
 
         <p>
           <strong>Your Comments:</strong>
-          <% @post.comments.where(user_id: current_user.id).limit(2).each do |comment| %>
+          <% @post.comments.where(user_id: current_user.id).each do |comment| %>
             <li><%= link_to comment.comment_text, comment_path(comment) %>
             </li>
           <% end %>
@@ -43,9 +43,7 @@
 
         <p>
           <strong>Shared with:</strong>
-          <% @post.share_posts.each do |user| %>
-            <%= users = user.users.count %> <%= (users) == 1 ? 'User' : 'Users'%>
-          <% end %>
+          <% users = @post.try(:share_post).try(:users).try(:count) %> <%= (users) == 1 ? 'User' : 'Users'%>
         </p>
 
         <p >

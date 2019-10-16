@@ -3,7 +3,7 @@
   <div class="clearfix">
     <div class="x_panel">
       <div class="x_content">
-        <% if @share_posts.present? %>
+        <% if @share_post.present? %>
         <h1>Shared With: </h1>
         <table class="table" >
           <thead>
@@ -15,15 +15,13 @@
           </thead>
 
           <tbody>
-            <% @share_posts.each do |shared_user| %>
-              <% shared_user.users.each do |user| %>
+            <% @share_post.each do |user| %>
               <tr>
                 <td><%=link_to User.find_by(id: user).first_name, user_path(id: user), class: 'btn btn-link', style: 'color: blue;' %></td>
                 <td><%= User.find_by(id: user).email %></td>
               </tr>
-              <% end %>
-              <% if @post.user == shared_user.post.user && shared_user.post.user == current_user %>
-                <%= link_to share_post_path(shared_user), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-sm' do %>
+              <% if @post.user == current_user %>
+                <%= link_to share_post_path(@post.share_post.id), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-sm' do %>
                   <i class="fa fa-trash" aria-hidden="true" ></i> Remove Sharing from all
                 <% end %>
               <% end %>
