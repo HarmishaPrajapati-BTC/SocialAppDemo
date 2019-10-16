@@ -14,6 +14,13 @@
         </p>
 
         <p>
+          <strong>See all Posts of this group:</strong>
+          <% @group.posts.each do |post| %>
+            <p>Post Name: <%= link_to post.name, post_path(post.id), class: 'btn btn-link', style: 'color: blue;'  %></p>
+          <% end %>
+        </p>
+
+        <p>
           <strong>Members:</strong>
           <table class="table" >
             <thead>

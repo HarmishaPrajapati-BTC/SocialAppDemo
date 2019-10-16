@@ -59,7 +59,7 @@ class GroupsController < ApplicationController
   def join_group
     @group = Group.find params[:id]
     @group.users.each do |user|
-      if user != current_user
+      if user != current_user && !@group.users.include?(current_user)
         @group.users << current_user
       end
     end
