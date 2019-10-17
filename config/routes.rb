@@ -15,7 +15,11 @@ Rails.application.routes.draw do
   get 'notifications/link_through'
   resources :groups
   resources :comments
-  resources :users
+  resources :users do
+    member do
+      delete :delete_image_attachment
+    end
+  end
   resources :notifications
   resources :share_posts
   devise_scope :user do

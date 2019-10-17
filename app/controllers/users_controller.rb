@@ -109,6 +109,13 @@ class UsersController < ApplicationController
     redirect_to request.referrer
   end
 
+  def delete_image_attachment
+    @image = ActiveStorage::Attachment.find_by(id: params[:profile_image_id])
+    @image.purge
+    flash[:notice] = t('flash_notice.destroy.success', resource: 'Image')
+    redirect_to edit_user_path(id: params[:id])
+  end
+
   private
     def set_user
       @user = User.find(params[:id])
