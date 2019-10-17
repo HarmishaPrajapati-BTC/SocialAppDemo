@@ -4,6 +4,11 @@
     <div class="x_panel">
       <div class="x_content">
         <p>
+          <strong>Group Admin:</strong>
+          <%= User.find_by(id: @group.user_id).try(:first_name) %>
+        </p>
+
+        <p>
           <strong>Name:</strong>
           <%= @group.name %>
         </p>
