@@ -26,6 +26,7 @@ class SharePostsController < ApplicationController
           shared_post_id.users.push(user)
         end
         shared_post_id.save
+        create_notifications(shared_post_id)
       end
       redirect_to shared_post_id
     else
@@ -33,6 +34,7 @@ class SharePostsController < ApplicationController
       @share_post.users = share_post_params[:users].reject(&:empty?)
       respond_to do |format|
         if @share_post.save
+          create_notifications(shared_post_id)
           format.html { redirect_to @share_post, notice: 'Post Shared successfully.' }
         else
           format.js { render :new }
@@ -48,6 +50,14 @@ class SharePostsController < ApplicationController
       else
         format.js { render :edit }
       end
+    end
+  end
+
+  def create_notifications(shared_post_id)
+    shared_post = shared_post_id.post_id
+    shared_users = share_post_params[:users].reject(&:empty?)
+    shared_users.each do |user_id|
+      Notification.create(user_id: user_id, notified_by_id: current_user.id, post_id: shared_post, notice_type: 'Shared Post')
     end
   end
 

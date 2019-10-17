@@ -6,8 +6,11 @@
       <div class="x_content">
         <% if check_presence_of_notification.present? %>
           <% check_presence_of_notification.each do |notification| %>
-                <p><i class="fa fa-user"></i><%= link_to " You Have New friend Request from #{notification_from_user(notification)}", find_user(notification) %>
-                </p>
+            <% if notification.notice_type == "Shared Post"%>
+                <i class="fa fa-user"></i><%= link_to " #{notification_from_user(notification)} has shared post with you" , find_user(notification), class: 'btn btn-link', style: 'color: blue;'  %>
+                <%= link_to find_shared_post(notification), class: 'btn btn-info btn-xs' do %>See Post<% end %>
+            <% else %>
+                <p><i class="fa fa-user"></i><%= link_to " You Have New friend Request from #{notification_from_user(notification)}", find_user(notification), class: 'btn btn-link', style: 'color: blue;' %></p>
                 <ul>
                   <% if check_friend_request_status(notification) %>
                     <button class="btn btn-success btn-xs", disabled= true>You are now Friends</button>
@@ -17,11 +20,15 @@
                     <%= link_to reject_friend_request_path(notification), class: 'btn btn-danger btn-xs' do %>Reject<% end %>
                   <% end %>
                 </ul>
+            <% end %>
           <% end %>
         <% else %>
           <%= render 'users/shared/no_record_found'%>
         <% end %>
       </div>
     </div>
+    <%= link_to posts_path, class: 'btn btn-primary btn-sm' do %>
+      <i class="fa fa-arrow-left" aria-hidden="true"></i> Back
+    <% end %>
   </div>
 </div>

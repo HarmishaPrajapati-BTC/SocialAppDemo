@@ -22,13 +22,13 @@ class GroupsController < ApplicationController
     if @group.new_record?
       if current_user != 'admin' && (current_user.has_role? :member)
         current_user.add_role :group_admin
+        @group.user_id = current_user.id
       end
     end
     authorize @group
     @group.users = User.where(id: params[:group][:user_ids])
     respond_to do |format|
       if @group.save
-        # User.invite!(email: "yuyuuhjm@gmail.com")
         format.html { redirect_to @group, notice: 'Group was successfully created.' }
       else
         format.html { render :new }
@@ -77,7 +77,7 @@ class GroupsController < ApplicationController
   end
 
   def your_groups
-    @groups = current_user.groups
+    @groups = Group.where(user_id: current_user.id)
   end
 
   private
@@ -87,6 +87,6 @@ class GroupsController < ApplicationController
     end
 
     def group_params
-      params.require(:group).permit(:name, :group_type, user_ids: [])
+      params.require(:group).permit(:name, :user_id, :group_type, user_ids: [])
     end
 end

@@ -43,7 +43,7 @@
 
         <p>
           <strong>Shared with:</strong>
-          <% users = @post.try(:share_post).try(:users).try(:count) %> <%= (users) == 1 ? 'User' : 'Users'%>
+          <%= users = @post.try(:share_post).try(:users).try(:count) %> <%= (users) == nil ? '0 User' : 'Users'%>
         </p>
 
         <p >

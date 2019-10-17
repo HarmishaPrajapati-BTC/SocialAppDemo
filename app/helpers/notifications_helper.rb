@@ -4,6 +4,12 @@ module NotificationsHelper
     user_name = User.find(notification_id).first_name
   end
 
+  def find_shared_post(notification)
+    post_id = notification.post_id
+    post = Post.find_by(id: post_id)
+    post_path(post.id)
+  end
+
   def find_user(notification)
     user_id = notification.notified_by_id
     user = User.find(user_id)
