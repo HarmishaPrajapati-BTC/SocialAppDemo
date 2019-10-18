@@ -1,9 +1,57 @@
-<p id="notice"><%= notice %></p>
+<%= render 'users/shared/home'%>
+<div class="right_col" role="main" style="min-height: 600px;">
+  <div class="clearfix">
+    <div class="x_panel">
+      <div class="x_content">
+        <p>
+          <strong>Group Admin:</strong>
+          <%= User.find_by(id: @group.user_id).try(:first_name) %>
+        </p>
 
-<p>
-  <strong>Name:</strong>
-  <%= @group.name %>
-</p>
+        <p>
+          <strong>Name:</strong>
+          <%= @group.name %>
+        </p>
 
-<%= link_to 'Edit', edit_group_path(@group) %> |
-<%= link_to 'Back', groups_path %>
+        <p>
+          <strong>Group Type:</strong>
+          <%= @group.group_type %>
+        </p>
+
+        <p>
+          <strong>See all Posts of this group:</strong>
+          <% @group.posts.each do |post| %>
+            <p>Post Name: <%= link_to post.name, post_path(post.id), class: 'btn btn-link', style: 'color: blue;'  %></p>
+          <% end %>
+        </p>
+
+        <p>
+          <strong>Members:</strong>
+          <table class="table" >
+            <thead>
+              <tr>
+                <th>Member Name</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @group.users.each do |group_user| %>
+              <tr>
+                <td><%= group_user.try(:first_name) %></td>
+
+              </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </p>
+        <% if (current_user.has_role? :admin) || (current_user.has_role? :group_admin) %>
+          <%= link_to  groups_path, class: 'btn btn-primary btn-sm' do %>
+            <i class="fa fa-arrow-left" aria-hidden="true"></i> Back
+          <% end %>
+          <%= link_to edit_group_path(@group), class: 'btn btn-success btn-sm' do %>
+            <i class="fa fa-edit" aria-hidden="true"></i> Edit
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

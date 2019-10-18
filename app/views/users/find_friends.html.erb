@@ -1,0 +1,35 @@
+<%= render 'users/shared/home'%>
+<div class="right_col" role="main" style="min-height: 600px;">
+  <div class="clearfix">
+    <h1>Make New Friends  <i class="fa fa-smile-o"></i></h1>
+    <div class="x_panel">
+      <div class="x_content">
+        <table class="table" >
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th></th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <% @users.each do |user| %>
+              <tr>
+                <td><%= link_to user.first_name, user_path(user), class: 'btn btn-link', style: 'color: blue;' %></td>
+                <td><%= user.email %>
+                  <% if already_friends(user) %>
+                    <td><button type="button" class= 'btn btn-success btn-xs', disabled= true > Friends </button> </td>
+                  <% elsif check_exist_friend_request(user) %>
+                    <td><button type="button" class= 'btn btn-warning btn-xs', disabled= true > Request sent </button></td>
+                  <% else %>
+                    <td><%= link_to create_notifications_path(user), class: 'btn btn-primary btn-xs' do %> Send Friend Request <% end %></td>
+                  <% end %>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,21 @@
+<%= render 'users/shared/home'%>
+<div class="right_col" role="main" style="min-height: 600px;">
+  <div class="clearfix">
+    <div class="x_panel">
+      <div class="x_content">
+        <% if @comments.present? %>
+            <p>
+              <% @comments.each do |comment| %>
+                <%= comment.comment_text %><%= link_to comment_by_user(comment).try(:first_name), user_path(comment_by_user(comment).try(:id)), class: 'btn btn-link', style: 'color: blue;' %><br>
+              <% end %>
+            </p>
+        <% else %>
+          <%= render 'users/shared/no_record_found'%>
+        <% end %>
+      </div>
+      <%= link_to post_path(@post), class: 'btn btn-primary btn-sm' do %>
+        <i class="fa fa-arrow-left" aria-hidden="true"></i> Back
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,28 @@
+<%= render 'users/shared/home'%>
+<div class="right_col" role="main" style="min-height: 600px;">
+  <div class="clearfix">
+    <div class="x_panel">
+      <div class="x_content">
+        <p>
+          <strong>Comment:</strong>
+          <%= @comment.comment_text %>
+        </p>
+        <%= link_to post_path(id: @comment.post_id), class: 'btn btn-primary btn-sm' do %>
+          <i class="fa fa-arrow-left" aria-hidden="true"></i> Back
+        <% end %>
+        <%= link_to edit_comment_path(@comment, post_id: @comment.post_id), remote: true, class: 'btn btn-success btn-sm' do %>
+          <i class="fa fa-edit" aria-hidden="true"></i> Edit
+        <% end %>
+        <%= link_to comment_path(@comment), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-sm' do %>
+          <i class="fa fa-trash" aria-hidden="true" ></i> Delete
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="modal-window" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content"></div>
+  </div>
+</div>

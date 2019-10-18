@@ -1,31 +1,58 @@
-<p id="notice"><%= notice %></p>
+<%= render 'users/shared/home'%>
+<div class="right_col" role="main" style="min-height: 600px;">
+  <div class="clearfix">
+    <h1>Posts</h1>
+    <div class="x_panel">
+      <div class="nav navbar-right panel_toolbox">
+        <%= link_to new_post_path, class: "btn btn-dark btn-sm", style: "align: right;" do %>
+          <i class="fa fa-arrow-right pd-6" data-placement="bottom" title='create'></i> Create New Post
+        <% end %>
+      </div>
+      <div class="x_content">
+        <% if @posts.present? %>
+          <% @posts.each do |post| %>
+            <b><%= post.name %></b><br>
+            Post type - <%= post.post_type %><br>
+            <blockquote>
+              <%= post.content %>
+              <footer>
+                <cite><b><%= post.try(:user).try(:first_name) %></b></cite>
+              </footer>
+              <% if post.image.attached? %>
+                <%= image_tag post.image, size: "120x100" %>
+              <% end %>
+            </blockquote>
+            <% pre_like = post.try(:likes).try(:find) { |like| like.user_id == current_user.id} %>
+            <% if pre_like %>
+              <%= link_to post_like_path(post, pre_like), method: :delete do %>
+                <i class="fa fa-thumbs-down pd-6" data-placement="bottom" title='UnLike'></i><%= post.likes.count %>
+                <%= link_to (post.likes.count) == 1 ? 'Like' : 'Likes', post_path(post) %>
+              <% end %>
+            <% else %>
+              <%= link_to post_likes_path(post), method: :post do %>
+                <i class="fa fa-thumbs-up pd-6" data-placement="bottom" title='Like'></i>
+                <%= post.likes.count %> <%= link_to (post.likes.count) == 1 ? 'Like' : 'Likes', post_path(post) %>
+              <% end %>
+            <% end %>
+            <%= link_to new_comment_path(post_id: post.id), remote: true, data: {toggle: "modal", target: '#modal-window'}  do %>
+              <i class="fa fa-comment pd-6" data-placement="bottom" title='Comment'></i><%= post.comments.count %>
+              <%= (post.comments.count) == 1 ? 'Comment' : 'Comments' %>
+            <% end %>
+            <%= link_to new_share_post_path(post_id: post.id), remote: true, data: {toggle: "modal", target: '#modal-window'}  do %>
+              <i class="fa fa-share pd-6" data-placement="bottom" title='Share'></i>
+            <% end %><br>
+          <% end %>
+          <%= paginate @posts %>
+        <% else %>
+          <%= render 'users/shared/no_record_found'%>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
 
-<h1>Posts</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Post type</th>
-      <th>Content</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @posts.each do |post| %>
-      <tr>
-        <td><%= post.name %></td>
-        <td><%= post.post_type %></td>
-        <td><%= post.content %></td>
-        <td><%= link_to 'Show', post %></td>
-        <td><%= link_to 'Edit', edit_post_path(post) %></td>
-        <td><%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Post', new_post_path %>
+<div id="modal-window" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content"></div>
+  </div>
+</div>

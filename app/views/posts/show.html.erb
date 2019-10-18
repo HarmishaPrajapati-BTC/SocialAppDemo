@@ -1,19 +1,78 @@
-<p id="notice"><%= notice %></p>
+<%= render 'users/shared/home'%>
+<div class="right_col" role="main" style="min-height: 600px;">
+  <div class="clearfix">
+    <div class="x_panel">
+      <div class="x_content">
+        <div class="nav navbar-right panel_toolbox">
+          <%= link_to "See who liked this post", post_liked_by_user_path(@post), class: 'btn btn-info btn-sm' %>
+          <%= link_to "See all Comments", post_comments_path(@post), class: 'btn btn-info btn-sm' %>
+          <%= link_to "See Shared Users", post_post_share_path(@post), class: 'btn btn-info btn-sm' %>
+        </div>
+        <p>
+          <strong>Name:</strong>
+          <%= @post.name %>
+        </p>
 
-<p>
-  <strong>Name:</strong>
-  <%= @post.name %>
-</p>
+        <p>
+          <strong>Post type:</strong>
+          <%= @post.post_type %>
+        </p>
 
-<p>
-  <strong>Post type:</strong>
-  <%= @post.post_type %>
-</p>
+        <p>
+          <strong>Content:</strong>
+          <%= @post.content %>
+        </p>
 
-<p>
-  <strong>Content:</strong>
-  <%= @post.content %>
-</p>
+        <p>
+          <strong>Group:</strong>
+          <%= Group.find_by(id: @post.group_id).name %>
+        </p>
 
-<%= link_to 'Edit', edit_post_path(@post) %> |
-<%= link_to 'Back', posts_path %>
+        <p>
+          <strong>Likes:</strong>
+          <%= @post.likes.count %> <%= (@post.likes.count) == 1 ? 'Like' : 'Likes'%>
+        </p>
+
+        <p>
+          <strong>Your Comments:</strong>
+          <% @post.comments.where(user_id: current_user.id).each do |comment| %>
+            <li><%= link_to comment.comment_text, comment_path(comment) %>
+            </li>
+          <% end %>
+        </p>
+
+        <p>
+          <strong>Shared with:</strong>
+          <%= users = @post.try(:share_post).try(:users).try(:count) %> <%= (users) == nil ? '0 User' : 'Users'%>
+        </p>
+
+        <p >
+          <strong>Image:</strong> click to zoom<br><br>
+            <% if @post.image.attached? %>
+              <%= image_tag @post.image, size: "120x100", id: "zoom_image" %>
+            <% end %>
+        </p><br>
+
+        <%= link_to posts_path, class: 'btn btn-primary btn-sm' do %>
+          <i class="fa fa-arrow-left" aria-hidden="true"></i> Back
+        <% end %>
+        <% if current_user == @post.user %>
+          <%= link_to edit_post_path(@post), class: 'btn btn-success btn-sm' do %>
+            <i class="fa fa-edit" aria-hidden="true"></i> Edit
+          <% end %>
+          <%= link_to post_path(@post), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-sm' do %>
+            <i class="fa fa-trash" aria-hidden="true" ></i> Delete
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+$(document).ready(function(){
+  $("#zoom_image").click(function(){
+    $("#zoom_image").animate({height:400,width:600},"fast");
+   });
+});
+</script>

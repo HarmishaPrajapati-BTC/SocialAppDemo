@@ -3,7 +3,8 @@
   <body class="nav-md">
     <div class="container body">
       <div class="main_container">
-        <div class="col-md-3 left_col">
+        <%= render 'notifications/notification'%>
+        <div class="col-md-3 left_col menu_fixed">
           <div class="left_col scroll-view">
             <div class="navbar nav_title" style="border: 0;">
               <a class="site_title"><i class="fa fa-instagram"></i> <span>Social Media</span></a>
@@ -14,34 +15,59 @@
               <div class="menu_section">
                 <ul class="nav side-menu">
                   <li>
-                    <a href="<%= new_post_path %>">
+                    <a href="<%= posts_path %>">
                       <i class="fa fa-newspaper-o">
                       </i> Posts
                     </a>
                   </li>
                   <li>
-                    <a href="<%= new_group_path %>">
+                    <a href="<%= groups_path %>">
                     <i class="fa fa-users">
                     </i>Groups</a>
                   </li>
                   <li>
-                    <a href="<%=new_post_path%>">
+                    <a href="<%= your_groups_path %>">
+                    <i class="fa fa-user">
+                    </i>Your Groups</a>
+                  </li>
+                  <li>
+                    <a href="<%=friend_list_path%>">
+                      <i class="fa fa-th-list">
+                      </i>Your Friend List</a>
+                  </li>
+                  <li>
+                    <a href="<%=find_friends_path%>">
                       <i class="fa fa-search">
                       </i>Find Friends</a>
                   </li>
+                  <% if current_user.has_role? :admin %>
+                    <li>
+                      <a href="<%= users_path %>">
+                      <i class="fa fa-user">
+                      </i>Users</a>
+                    </li>
+                    <li>
+                      <a href="<%=account_path%>">
+                        <i class="fa fa-bookmark">
+                        </i>Account</a>
+                    </li>
+                  <% else %>
+                    <li>
+                      <a href="<%=account_path%>">
+                        <i class="fa fa-bookmark">
+                        </i>Account</a>
+                    </li>
+                  <% end %>
                   <li>
-                    <a href="<%=new_post_path%>">
-                      <i class="fa fa-bookmark">
-                      </i>Account</a>
+                    <a href="<%=destroy_user_session_path%>">
+                      <i class="fa fa-power-off">
+                      </i>Logout</a>
                   </li>
                 </ul>
               </div>
             </div>
           </div>
         </div>
-       <div class="nav navbar-nav navbar-right">
-        <%= link_to "Logout", destroy_user_session_path %>
-      </div>
     </div>
 </body>
 </html>

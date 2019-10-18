@@ -1,25 +1,51 @@
-<div data-controller='customers'>
-  <div class="right_col" role="main" style="min-height: 600px;">
-    <%= form_with(model: @group, local: true, class: 'form-horizontal form-label-left') do |f| %>
-        <div class="x_panel" style="min-height: 600px;"><h1><b>Create New Group</b>
-        <div class="nav navbar-right panel_toolbox">
-        </div></h1><br>
-          <div class="form-group">
-            <label class="control-label col-md-3 col-sm-3 col-xs-12">
-              <%= t('post.name') %>
-              <span class="text-danger">*</span>
-            </label>
-            <div class="col-md-6 col-sm-6 col-xs-12">
-              <%= f.text_field :name, class: 'form-control', required: true %>
-            </div>
-          </div>
-            <div class="form-group">
-              <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                <button class="btn btn-primary" type="reset">Reset</button>
-                <button type="submit" class="btn btn-success">Submit</button>
-              </div>
-           </div>
+<div class="right_col" role="main" style="min-height: 600px;">
+<%= form_with(model: @group, local: true, class: 'form-horizontal form-label-left') do |f| %>
+    <div class="x_panel" style="min-height: 600px;">
+    <div class="nav navbar-right panel_toolbox">
+    </div>
+      <div class="form-group">
+        <label class="control-label col-md-3 col-sm-3 col-xs-12">
+          <%= t('group.name') %>
+          <span class="text-danger">*</span>
+        </label>
+        <div class="col-md-6 col-sm-6 col-xs-12">
+          <%= f.text_field :name, class: 'form-control', required: true %>
+        </div>
       </div>
-    <% end %>
+      <div class="form-group">
+        <label class="control-label col-md-3 col-sm-3 col-xs-12">
+          <%= t('group.group_type') %>
+          <span class="text-danger">*</span>
+        </label>
+        <div class="col-md-6 col-sm-6 col-xs-12">
+          <%= f.text_field :group_type, class: 'form-control', required: true %>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-md-3 col-sm-3 col-xs-12">
+          <%= t('group.users') %>
+          <span class="text-danger">*</span>
+        </label>
+        <div class="col-md-6 col-sm-6 col-xs-12">
+          <%= f.collection_select :user_ids, User.order(:first_name), :id, :first_name, {}, {multiple: true, class: 'form-control'} %>
+        </div>
+      </div>
+        <div class="form-group">
+          <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+            <%= link_to groups_path, class: 'btn btn-primary' do %>
+              <i class="fa fa-arrow-left" aria-hidden="true"></i> <%= t('back') %>
+            <% end %>
+            <button type="submit" class="btn btn-success">Submit</button>
+          </div>
+       </div>
   </div>
+<% end %>
 </div>
+
+
+
+<script type="text/javascript">
+  $( "#group_user_ids" ).select2();
+  user_name = document.getElementById('group_user').value.split(' ');
+  $('select#group_user_ids').val(user_name).select2();
+ </script>

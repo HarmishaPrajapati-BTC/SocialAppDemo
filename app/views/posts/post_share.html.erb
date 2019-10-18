@@ -1,0 +1,40 @@
+<%= render 'users/shared/home'%>
+<div class="right_col" role="main" style="min-height: 600px;">
+  <div class="clearfix">
+    <div class="x_panel">
+      <div class="x_content">
+        <% if @share_post.present? %>
+        <h1>Shared With: </h1>
+        <table class="table" >
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th></th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <% @share_post.each do |user| %>
+              <tr>
+                <td><%=link_to User.find_by(id: user).first_name, user_path(id: user), class: 'btn btn-link', style: 'color: blue;' %></td>
+                <td><%= User.find_by(id: user).email %></td>
+              </tr>
+              <% if @post.user == current_user %>
+                <%= link_to share_post_path(@post.share_post.id), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-sm' do %>
+                  <i class="fa fa-trash" aria-hidden="true" ></i> Remove Sharing from all
+                <% end %>
+              <% end %>
+            <% end %>
+          </tbody>
+        </table>
+      <% else %>
+        <%= render 'users/shared/no_record_found'%>
+      <% end %>
+      </div>
+      <%= link_to post_path(@post), class: 'btn btn-primary btn-sm' do %>
+        <i class="fa fa-arrow-left" aria-hidden="true"></i> Back
+      <% end %>
+    </div>
+  </div>
+</div>

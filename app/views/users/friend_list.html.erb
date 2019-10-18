@@ -1,0 +1,28 @@
+<%= render 'users/shared/home'%>
+<div class="right_col" role="main" style="min-height: 600px;">
+  <div class="clearfix">
+    <h1>Friends  <i class="fa fa-smile-o"></i></h1>
+    <div class="x_panel">
+      <div class="x_content">
+        <table class="table" >
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th></th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <% @friends.each do |friend| %>
+              <tr>
+                <td><%= link_to friend.first_name, user_path(friend), class: 'btn btn-link', style: 'color: blue;' %></td>
+                <td><%= friend.email %>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
