@@ -55,7 +55,9 @@ class UsersController < ApplicationController
   end
 
   def friend_list
-    @friends = current_user.friends
+    session[:conversations] ||= []
+    @friends = current_user.friends.page(params[:page]).per(5)
+    @conversations = Conversation.includes(:recipient, :messages).find(session[:conversations])
   end
 
   def account

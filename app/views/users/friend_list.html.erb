@@ -8,7 +8,6 @@
           <thead>
             <tr>
               <th>Name</th>
-              <th>Email</th>
               <th></th>
             </tr>
           </thead>
@@ -17,11 +16,21 @@
             <% @friends.each do |friend| %>
               <tr>
                 <td><%= link_to friend.first_name, user_path(friend), class: 'btn btn-link', style: 'color: blue;' %></td>
-                <td><%= friend.email %>
+                <td><%= link_to "Message", conversations_path(user_id: friend), remote: true, method: :post, class: 'btn btn-success btn-xs' %></td>
               </tr>
             <% end %>
           </tbody>
         </table>
+        <%= paginate @friends %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-9">
+        <ul id="conversations-list">
+          <% @conversations.each do |conversation| %>
+            <%= render 'conversations/conversation', conversation: conversation, user: current_user %>
+          <% end %>
+        </ul>
       </div>
     </div>
   </div>

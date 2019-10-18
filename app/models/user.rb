@@ -13,6 +13,8 @@ class User < ApplicationRecord
   has_many :likes, dependent: :destroy
   has_many :share_posts, dependent: :destroy
   has_many :notifications, dependent: :destroy
+  has_many :messages
+  has_many :conversations, foreign_key: :sender_id
 
   def self.from_omniauth(auth)
     # Either create a User record or update it based on the provider (Google) and the UID
