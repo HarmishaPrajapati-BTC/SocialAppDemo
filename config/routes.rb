@@ -13,6 +13,12 @@ Rails.application.routes.draw do
   end
   get 'your_groups', to: 'groups#your_groups'
   get 'notifications/link_through'
+  resources :conversations, only: [:create] do
+    member do
+      post :close
+    end
+    resources :messages, only: [:create]
+  end
   resources :groups
   resources :comments
   resources :users do
