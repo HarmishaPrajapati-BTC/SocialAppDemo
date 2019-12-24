@@ -7,10 +7,20 @@
         <div class="col-md-3 left_col menu_fixed">
           <div class="left_col scroll-view">
             <div class="navbar nav_title" style="border: 0;">
-              <a class="site_title"><i class="fa fa-instagram"></i> <span>Social Media</span></a>
+              <a class="site_title"><i class="fa fa-facebook"></i> <span>Custom facebook</span></a>
             </div>
             <br>
-            <div class="clearfix"></div>
+            <div class="clearfix">
+              <div class="profile clearfix">
+                <div class="profile_pic">
+                  <%= image_tag(current_user.profile_image, class: "img-circle profile_img") if current_user.profile_image.attached? %>
+                </div>
+                <div class="profile_info">
+                <span>Welcome,</span>
+                <h2><%= current_user.first_name %></h2>
+                </div>
+              </div>
+            </div>
             <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
               <div class="menu_section">
                 <ul class="nav side-menu">
@@ -48,14 +58,14 @@
                     </li>
                     <li>
                       <a href="<%=account_path%>">
-                        <i class="fa fa-bookmark">
-                        </i>Account</a>
+                        <i class="fa fa-address-card">
+                        </i>Your Profile</a>
                     </li>
                   <% else %>
                     <li>
                       <a href="<%=account_path%>">
-                        <i class="fa fa-bookmark">
-                        </i>Account</a>
+                        <i class="fa fa-address-card">
+                        </i>Your Profile</a>
                     </li>
                   <% end %>
                   <li>

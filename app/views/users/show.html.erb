@@ -28,9 +28,11 @@
         <div class='col-md-6 col-sm-6 col-xs-12'>
           <p >
             <strong>Profile Image:</strong><br>
-              <% if @user.profile_image.attached? %>
-                <%= image_tag @user.profile_image, size: "100x120" %>
-              <% end %>
+              <div class="profile_pic">
+                <% if @user.profile_image.attached? %>
+                  <%= image_tag(@user.profile_image, class: "img-circle profile_img") %>
+                <% end %>
+              </div>
           </p>
         </div>
         <p>

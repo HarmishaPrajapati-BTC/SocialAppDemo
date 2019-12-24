@@ -4,9 +4,15 @@
     <div class="x_panel">
       <div class="x_content">
         <div class="nav navbar-right panel_toolbox">
-          <%= link_to "See who liked this post", post_liked_by_user_path(@post), class: 'btn btn-info btn-sm' %>
-          <%= link_to "See all Comments", post_comments_path(@post), class: 'btn btn-info btn-sm' %>
-          <%= link_to "See Shared Users", post_post_share_path(@post), class: 'btn btn-info btn-sm' %>
+          <%= link_to post_liked_by_user_path(@post), class: 'btn btn-app' do %>
+            <i class="fa fa-heart fa-spin" aria-hidden="true" ></i>Likes
+          <% end %>
+          <%= link_to post_comments_path(@post), class: 'btn btn-app' do %>
+            <i class="fa fa-comment fa-spin" aria-hidden="true" ></i>Comments
+          <% end %>
+          <%= link_to post_post_share_path(@post), class: 'btn btn-app' do %>
+            <i class="fa fa-share fa-spin" aria-hidden="true" ></i>Shares
+          <% end %>
         </div>
         <p>
           <strong>Name:</strong>

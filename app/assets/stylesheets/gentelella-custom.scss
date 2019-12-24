@@ -14,7 +14,7 @@ html , body{
 .full-height{
  height:100%;
  }
- 
+
  .messages-list {
   max-height: 200px;
   overflow-y: auto;
@@ -168,8 +168,15 @@ html , body{
 .calendar-exibit .calendar-table {
     padding: 0 0 4px 0
 }
+.dropdown-item{
+  width: 100%;
+  padding: 12px 20px;
+}
+.text-center{
+  padding: 12px 20px
+}
 .left_col {
-    background: black
+    background: #2A3F54
 }
 .nav-sm .container.body .col-md-3.left_col {
     min-height: 100%;
@@ -854,7 +861,7 @@ a:focus {
     height: 55px;
     margin: 0;
     padding-left: 10px;
-    background: black
+    background: #2A3F54
 }
 .site_title:hover,
 .site_title:focus {
@@ -1800,6 +1807,10 @@ a.user-profile {
     height: 29px;
     border-radius: 50%;
     margin-right: 10px
+}
+.user-profile-td {
+  height:50px;
+  width:50px
 }
 ul.top_profiles {
     height: 330px;
