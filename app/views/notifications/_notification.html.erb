@@ -1,24 +1,40 @@
 <ul class="nav navbar-nav navbar-right">
   <li role="presentation "class="dropdown">
     <a href="#" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false"><h2><i class="fa fa-bell-o"></i></h2>
-    <span class="badge bg-green"><%= notification_count %></span>
+      <span class="badge bg-green"><%= notification_count %></span>
     </a>
-    <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
+    <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu" >
       <% display_limited_notification.each do |notification| %>
         <li>
           <% if notification.notice_type == "Shared Post"%>
             <p><i class="fa fa-user"></i><%= link_to " #{notification_from_user(notification)} has shared post with you", find_shared_post(notification) %></p>
           <% else %>
             <p><i class="fa fa-user"></i><%= link_to "You have New Friend Request from #{notification_from_user(notification)}", find_user(notification) %></p>
-            <li><ul><%= link_to check_friend_request_status(notification) , class: 'btn btn-primary btn-xs' do %>Accept<% end %>
-            <%= link_to reject_friend_request_path(notification), class: 'btn btn-danger btn-xs' do %>Reject<% end %></ul></li>
+            <li>
+              <ul><%= link_to check_friend_request_status(notification) , class: 'btn btn-primary btn-xs' do %>Accept<% end %>
+                <%= link_to reject_friend_request_path(notification), class: 'btn btn-danger btn-xs' do %>Reject<% end %>
+              </ul>
+            </li>
           <% end %>
         </li>
       <% end %>
       <div class="text-center">
-        <h2><strong><%= link_to "See All Notifications", notifications_path, style: 'color: blue;' %></strong>
-        <i class="fa fa-angle-right"></i></h2>
+        <a class="dropdown-item">
+          <strong><%= link_to "See All Notifications", notifications_path %></strong>
+          <i class="fa fa-angle-right"></i>
+        </a>
       </div>
     </ul>
+  </li>
+  <li class="nav-item dropdown">
+    <a href="#" class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false">
+      <%= image_tag(current_user.profile_image) if current_user.profile_image.attached? %> <%= current_user.first_name %>
+    </a>
+    <div class="dropdown-menu dropdown-usermenu pull-right">
+      <a class="dropdown-item">
+        <strong><%= link_to "Profile", account_path %></strong></a><br>
+      <a class="dropdown-item">
+        <strong><%= link_to "Log Out ", destroy_user_session_path %></strong><i class="fa fa-sign-out"></i></a>
+    </div>
   </li>
 </ul>
