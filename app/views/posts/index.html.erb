@@ -13,15 +13,16 @@
           <% @posts.each do |post| %>
             <b><%= post.name %></b><br>
             Post type - <%= post.post_type %><br>
+            <% if post.image.attached? %>
+              <%= image_tag post.image, style:"display: block; margin: auto auto;" %>
+            <% end %>
             <blockquote>
-              <%= post.content %>
+              <%= simple_format(post.content) %>
               <footer>
                 <cite><b><%= post.try(:user).try(:first_name) %></b></cite>
               </footer>
-              <% if post.image.attached? %>
-                <%= image_tag post.image, size: "120x100" %>
-              <% end %>
             </blockquote>
+            <%= "#{time_ago_in_words(post.created_at)} ago" %><br>
             <% pre_like = post.try(:likes).try(:find) { |like| like.user_id == current_user.id} %>
             <% if pre_like %>
               <%= link_to post_like_path(post, pre_like), method: :delete do %>

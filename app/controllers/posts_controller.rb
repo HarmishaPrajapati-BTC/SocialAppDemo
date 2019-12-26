@@ -2,7 +2,7 @@ class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update, :destroy]
 
   def index
-    @posts = Post.page(params[:page]).per(5)
+    @posts = Post.order(id: :desc).page(params[:page]).per(5)
     authorize @posts
   end
 
