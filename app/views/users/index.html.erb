@@ -1,49 +1,33 @@
 <%= render 'users/shared/home'%>
 <div class="right_col" role="main" style="min-height: 600px;">
+  <h1>Users</h1>
   <div class="x_panel">
     <div class="x_content">
-    <% if @users.present? %>
-      <h1>Users</h1>
-        <table class="table" >
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Profile</th>
-              <th>First Name</th>
-              <th>Last Name</th>
-              <th>Email</th>
-              <th>Contact</th>
-              <th>Address</th>
-
-              <th>Actions</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            <% @users.each_with_index do |user, index| %>
-              <tr>
-                <td><%= index + 1 %></td>
-                <td><%= user.profile_image.attached? ? image_tag(user.profile_image, class: "user-profile-td ") : image_tag('default_img.jpeg', class: "user-profile-td ")%>
-                <td><%= display_dash_in_blank(user.first_name) %></td>
-                <td><%= display_dash_in_blank(user.last_name) %></td>
-                <td><%= display_dash_in_blank(user.email) %></td>
-                <td><%= display_dash_in_blank(user.contact_number) %></td>
-                <td><%= display_dash_in_blank(user.address) %></td>
-
-                <td>
-                <%= link_to user_path(user), class: 'btn btn-primary btn-xs' do %> Show <% end %>
-                <%= link_to edit_user_path(user), class: 'btn btn-success btn-xs' do %> Edit <% end %>
-                <%= link_to user_path(user), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-xs'  do %> Delete <% end %>
-                </td>
-              </tr>
-            <% end %>
-          </tbody>
-        </table>
-        <%= paginate @users %>
-      <% else %>
-        <%= render 'users/shared/no_record_found'%>
+      <div class="col-md-12">
+        <% @users.each_with_index do |user| %>
+          <div class="col-md-3 col-sm-6  ">
+            <div class="pricing">
+              <div class="x_content">
+                <div style='border:outset;'>
+                  <div class="pricing_features">
+                    <ul class="list-unstyled text-left">
+                      <li><%= user.profile_image.attached? ? image_tag(user.profile_image, class: "user-profile-td") : image_tag('default_img.jpeg', class: "user-profile-td ")%></li>
+                      <li><i class="fa fa-user"></i> <%= display_dash_in_blank(user.full_name) %></li>
+                      <li><i class="fa fa-envelope"></i> <%= display_dash_in_blank(user.email) %></li>
+                      <li><i class="fa fa-phone"></i> <%= display_dash_in_blank(user.contact_number) %></li>
+                      <li><i class="fa fa-map-marker"></i> <%= display_dash_in_blank(user.address) %></li>
+                    </ul><br>
+                    <%= link_to user_path(user), class: 'btn btn-primary btn-xs' do %> View Profile <% end %>
+                    <%= link_to edit_user_path(user), class: 'btn btn-success btn-xs' do %> Edit <% end %>
+                    <%= link_to user_path(user), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-xs'  do %> Delete <% end %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
       <% end %>
+      </div>
     </div>
   </div>
-  <br>
+  <%= paginate @users %>
 </div>

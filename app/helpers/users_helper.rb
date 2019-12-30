@@ -7,4 +7,8 @@ module UsersHelper
   def already_friends(user)
     current_user.friends.include?(user)
   end
+
+  def check_profile_image_attached
+    current_user.profile_image.attached? ? current_user.profile_image : 'default_img.jpeg'
+  end
 end

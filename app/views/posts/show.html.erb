@@ -57,8 +57,14 @@
             <% if @post.image.attached? %>
               <%= image_tag @post.image, size: "120x100", id: "zoom_image" %>
             <% end %>
-        </p><br>
+        </p>
 
+        <p>
+          <strong>Video:</strong><br>
+            <% if @post.video.attached? %>
+              <%= video_tag url_for(@post.video), size: "500x500", controls: true %>
+            <% end %>
+        </p>
         <%= link_to posts_path, class: 'btn btn-primary btn-sm' do %>
           <i class="fa fa-arrow-left" aria-hidden="true"></i> Back
         <% end %>

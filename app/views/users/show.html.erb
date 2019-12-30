@@ -1,72 +1,62 @@
 <%= render 'users/shared/home'%>
 <div class="right_col" role="main" style="min-height: 600px;">
   <div class="clearfix">
-    <h1>Account</h1>
+    <h1>Profile</h1>
     <div class="x_panel">
       <div class="x_content">
-        <div class='col-md-6 col-sm-6 col-xs-12'>
-          <p>
-            <strong>First Name:</strong>
-            <%= @user.first_name %>
-          </p>
-
-          <p>
-            <strong>Last Name:</strong>
-            <%= @user.last_name %>
-          </p>
-
-          <p>
-            <strong>Contact Number:</strong>
-            <%= @user.contact_number %>
-          </p>
-
-          <p>
-            <strong>Address:</strong>
-            <%= @user.address %>
-          </p>
+        <div class='col-md-3 col-sm-3  profile_left'>
+          <div class="profile_img">
+            <%= @user.profile_image.attached? ? image_tag(@user.profile_image, class: "img-responsive avatar-view ") : image_tag('default_img.jpeg', class: "img-responsive avatar-view")%>
+          </div>
+          <h3><%= @user.first_name %> <%= @user.last_name %></h3>
+          <ul class='list-unstyled user_data'>
+            <li>
+              <i class="fa fa-map-marker"></i> <%= @user.address %>
+            </li>
+            <li>
+              <i class="fa fa-phone"></i> <%= @user.contact_number %>
+            </li>
+            <li>
+              <i class="fa fa-envelope"></i> <%= @user.email %>
+            </li>
+          </ul>
         </div>
-        <div class='col-md-6 col-sm-6 col-xs-12'>
-          <p >
-            <strong>Profile Image:</strong><br>
-              <div class="profile_pic">
-                <% if @user.profile_image.attached? %>
-                  <%= image_tag(@user.profile_image, class: "img-circle profile_img") %>
+        <div class='col-md-9 col-sm-9'>
+          <h3 style='text-align:center;'>Group details</h3>
+          <%if @user.groups.present? %>
+            <table class="table" >
+              <thead>
+                <tr>
+                  <th>Group Name</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @user.groups.each do |group| %>
+                <tr>
+                  <td><%= group.try(:name) %></td>
+                  <td>
+                    <%= link_to group_path(group), class: 'btn btn-dark btn-xs' do %>
+                      Show Group
+                    <% end %>
+                  </td>
+                </tr>
                 <% end %>
-              </div>
-          </p>
+              </tbody>
+            </table>
+          <% else %>
+            <%= render 'users/shared/no_record_found'%>
+          <% end %>
         </div>
-        <p>
-          <strong>Groups:</strong>
-          <table class="table" >
-            <thead>
-              <tr>
-                <th>Group Name</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              <% @user.groups.each do |group| %>
-              <tr>
-                <td><%= group.try(:name) %></td>
-                <td>
-                  <%= link_to group_path(group), class: 'btn btn-dark btn-xs' do %>
-                    Show Group
-                  <% end %>
-                </td>
-              </tr>
-              <% end %>
-            </tbody>
-          </table>
-        </p>
-        <% if current_user.has_role? :admin %>
-          <%= link_to users_path, class: 'btn btn-primary btn-sm' do %>
-            <i class="fa fa-arrow-left" aria-hidden="true"></i> Back
-          <% end %>
-          <%= link_to edit_user_path(@user), class: 'btn btn-success btn-sm' do %>
-            <i class="fa fa-edit" aria-hidden="true"></i> Edit
-          <% end %>
-        <% end %>
       </div>
     </div>
+    <% if current_user.has_role? :admin %>
+      <%= link_to users_path, class: 'btn btn-primary btn-sm' do %>
+        <i class="fa fa-arrow-left" aria-hidden="true"></i> Back
+      <% end %>
+      <%= link_to edit_user_path(@user), class: 'btn btn-success btn-sm' do %>
+        <i class="fa fa-edit" aria-hidden="true"></i> Edit
+      <% end %>
+    <% end %>
   </div>
 </div>
