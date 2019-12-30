@@ -2,7 +2,8 @@ class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
   def index
-    @users = policy_scope(User).page(params[:page]).per(5)
+    @q = policy_scope(User).ransack(params[:q])
+    @users = @q.result.order(updated_at: :DESC).page(params[:page]).per(8)
   end
 
   def show
@@ -50,7 +51,8 @@ class UsersController < ApplicationController
   end
 
   def find_friends
-    @users = User.where.not(id: current_user.id)
+    @q = User.where.not(id: current_user.id).ransack(params[:q])
+    @users = @q.result
     authorize @users
   end
 
@@ -120,7 +122,7 @@ class UsersController < ApplicationController
 
   private
     def set_user
-      @user = User.find(params[:id])
+      @user = User.friendly.find(params[:id])
       authorize @user
     end
 

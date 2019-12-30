@@ -16,6 +16,9 @@
             <% if post.image.attached? %>
               <%= image_tag post.image, style:"display: block; margin: auto auto;" %>
             <% end %>
+            <% if post.video.attached? %>
+              <%= video_tag url_for(post.video), mute: :mute, size: "350x350", controls: true, style:"display: block; margin: auto auto;" %>
+            <% end %>
             <blockquote>
               <%= simple_format(post.content) %>
               <footer>

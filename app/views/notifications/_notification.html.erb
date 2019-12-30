@@ -28,7 +28,7 @@
   </li>
   <li class="nav-item dropdown">
     <a href="#" class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false">
-      <%= image_tag(current_user.profile_image) if current_user.profile_image.attached? %> <%= current_user.first_name %>
+      <%= image_tag(check_profile_image_attached) %> <%= current_user.first_name %>
     </a>
     <div class="dropdown-menu dropdown-usermenu pull-right">
       <a class="dropdown-item">

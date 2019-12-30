@@ -10,15 +10,14 @@
               <a class="site_title"><i class="fa fa-facebook"></i> <span>Custom facebook</span></a>
             </div>
             <br>
-            <div class="clearfix">
-              <div class="profile clearfix">
-                <div class="profile_pic">
-                  <%= image_tag(current_user.profile_image, class: "img-circle profile_img") if current_user.profile_image.attached? %>
-                </div>
-                <div class="profile_info">
-                <span>Welcome,</span>
-                <h2><%= current_user.first_name %></h2>
-                </div>
+            <div class="clearfix"></div>
+            <div class="profile clearfix">
+              <div class="profile_pic">
+                <%= image_tag(check_profile_image_attached, size: '55', class: "img-circle profile_img") %>
+              </div>
+              <div class="profile_info">
+              <span>Welcome,</span>
+              <h2><%= current_user.first_name %></h2>
               </div>
             </div>
             <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
